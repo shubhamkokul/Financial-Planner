@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Financial Planner</string>
+    <string name="financial_planner">Financial Planner</string>
+    <string name="current_moth_summary">Current Month Summary</string>
+    <string name="actual_income_actual_expenses">Actual Income / Actual Expenses: </string>
+    <string name="_500">500</string>
+    <string name="expenses_planned_actual_expenses">Expenses Planned / Actual Expenses: </string>
+    <string name="income_planned_actual_income">Income Planned / Actual Income: </string>
+    <string name="total_amount">Total Amount: </string>
+    <string name="income_planned_expense_planned">Income Planned / Expense Planned:</string>
+</resources>

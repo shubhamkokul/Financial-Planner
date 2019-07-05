@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/current_moth_summary"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight=".5"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line">
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight=".5"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/textAcutalIncomeExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/actual_income_actual_expenses"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/actualIncomeExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_500"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/textAcutalIncomeExpense"
+                android:layout_marginLeft="2dp"
+                android:layout_toEndOf="@+id/textAcutalIncomeExpense"
+                android:layout_marginStart="2dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line">
+        </LinearLayout>
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/horizontalBarChartActual"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1">
+            </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line">
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight=".5"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/textPlanedIncomeExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/income_planned_expense_planned"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/plannedIncomeExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_500"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/textPlanedIncomeExpense"
+                android:layout_marginLeft="2dp"
+                android:layout_toEndOf="@+id/textPlanedIncomeExpense"
+                android:layout_marginStart="2dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line">
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/horizontalBarChartPlanned"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+        </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/textDifferencePlannedExpenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expenses_planned_actual_expenses"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_margin="3dp"/>
+
+                <TextView
+                    android:id="@+id/differenceExpenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_500"
+                    android:textColor="@color/red"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/textDifferencePlannedExpenses"
+                    android:layout_marginLeft="2dp"
+                    android:layout_margin="3dp"
+                    android:layout_toEndOf="@+id/textDifferencePlannedExpenses"
+                    android:layout_marginStart="2dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/textDifferenceActualIncome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/income_planned_actual_income"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/differenceIncome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_500"
+                    android:textColor="@color/red"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/textDifferenceActualIncome"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toEndOf="@+id/textDifferenceActualIncome"
+                    android:layout_marginStart="2dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line">
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/textTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_amount"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_500"
+                android:textColor="@color/red"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/textTotalAmount"
+                android:layout_marginLeft="2dp"
+                android:layout_toEndOf="@+id/textTotalAmount"
+                android:layout_marginStart="2dp" />
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
