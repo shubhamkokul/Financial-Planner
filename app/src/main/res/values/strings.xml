@@ -8,4 +8,10 @@
     <string name="income_planned_actual_income">Income Planned / Actual Income: </string>
     <string name="total_amount">Total Amount: </string>
     <string name="income_planned_expense_planned">Income Planned / Expense Planned:</string>
+    <string name="title_activity_start_screen">StartScreen</string>
+    <string name="expense_plans">Expense Plans</string>
+    <string name="add_plans">Add Plans</string>
+    <string name="income_plans">Income Plans</string>
+    <string name="all_my_expenses_for_august_2019">All my expenses for August 2019</string>
+    <string name="_1_09_2019_29_02_2020">1.09.2019 - 29.02.2020</string>
 </resources>
