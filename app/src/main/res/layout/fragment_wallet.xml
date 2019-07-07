@@ -32,12 +32,13 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/walletListView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbalRelative">
 
         <ListView
+            android:id="@+id/walletListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
