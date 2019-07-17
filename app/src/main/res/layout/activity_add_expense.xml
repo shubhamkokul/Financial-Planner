@@ -207,7 +207,8 @@
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:inputType="numberDecimal"
-                android:background="@drawable/custom_rectangle_edittext">
+                android:background="@drawable/custom_rectangle_edittext"
+                android:textSize="14sp">
 
             </EditText>
         </LinearLayout>
@@ -243,7 +244,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/saveWallet"
+        android:id="@+id/saveExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/noteTypeLinear"
