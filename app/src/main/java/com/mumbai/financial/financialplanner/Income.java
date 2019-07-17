@@ -1,19 +1,19 @@
 package com.mumbai.financial.financialplanner;
 
-import android.content.Context;
-import android.net.Uri;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import planner.ExpenseIncomeModal;
-import planner.ExpenseListViewAdapter;
 import planner.IncomeListViewAdapter;
 
 
@@ -21,6 +21,7 @@ public class Income extends Fragment {
 
     private static final String TAG = "Income";
     private ListView incomeListView;
+    private ImageView plusSignButton;
     private List<ExpenseIncomeModal> expenseIncomeModalArrayList = new ArrayList<>();
 
     @Override
@@ -37,6 +38,16 @@ public class Income extends Fragment {
         incomeListView = view.findViewById(R.id.incomeListView);
         IncomeListViewAdapter adapter = new IncomeListViewAdapter(getActivity(), expenseIncomeModalArrayList);
         incomeListView.setAdapter(adapter);
+
+        plusSignButton = view.findViewById(R.id.plusSignButton);
+
+        plusSignButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IncomePlanner.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

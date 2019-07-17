@@ -1,12 +1,14 @@
 package com.mumbai.financial.financialplanner;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Wallet extends Fragment {
 
     private static final String TAG = "Expenses";
     private ListView walletListView;
+    private ImageView plusSignButton;
     private List<WalletModal> walletModalArrayList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +37,16 @@ public class Wallet extends Fragment {
         walletListView = view.findViewById(R.id.walletListView);
         WalletListViewAdapter adapter = new WalletListViewAdapter(getActivity(), walletModalArrayList);
         walletListView.setAdapter(adapter);
+
+        plusSignButton = view.findViewById(R.id.plusSignButton);
+
+        plusSignButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WalletPlanner.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

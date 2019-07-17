@@ -14,4 +14,23 @@
     <string name="income_plans">Income Plans</string>
     <string name="all_my_expenses_for_august_2019">All my expenses for August 2019</string>
     <string name="_1_09_2019_29_02_2020">1.09.2019 - 29.02.2020</string>
+    <string name="plan_type">Plan Type</string>
+    <string name="add_expense_plan">Add Expense Plan</string>
+    <string name="description">Description</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="add_income_plan">Add Income Plan</string>
+    <string name="save">Save</string>
+    <string name="add_new_account">Add new Account</string>
+    <string name="name">Name</string>
+    <string name="icon">Icon</string>
+    <string name="current_amount">Current Amount</string>
+    <string name="account">Account</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="plan">Plan</string>
+    <string name="add">Add</string>
+    <string name="category">Category</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="note">Note</string>
 </resources>
