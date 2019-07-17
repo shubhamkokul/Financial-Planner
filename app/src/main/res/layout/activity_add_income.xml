@@ -31,7 +31,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Add Income"
+            android:text="@string/add_income"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:text="@string/account"
             android:textColor="@color/black"
@@ -59,8 +59,8 @@
         <Spinner
             android:id="@+id/accountTypeSpinner"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
             android:background="@drawable/custom_rectangle_spinner">
         </Spinner>
 
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:text="@string/plan"
                 android:textColor="@color/black"
@@ -96,8 +96,8 @@
             <Spinner
                 android:id="@+id/planTypeSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/custom_rectangle_spinner">
             </Spinner>
 
@@ -109,7 +109,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
             android:layout_weight=".1"
             android:background="@drawable/custom_rectangle_button"
             android:text="@string/add"  />
@@ -129,7 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:text="@string/category"
             android:textColor="@color/black"
@@ -139,8 +138,8 @@
         <Spinner
             android:id="@+id/categoryTypeSpinner"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
             android:background="@drawable/custom_rectangle_spinner">
         </Spinner>
 
@@ -167,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:text="@string/date"
                 android:textColor="@color/black"
@@ -177,8 +176,8 @@
             <Spinner
                 android:id="@+id/dateSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/custom_rectangle_spinner">
 
             </Spinner>
@@ -196,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:text="@string/amount"
                 android:textColor="@color/black"
@@ -206,11 +205,11 @@
             <EditText
                 android:id="@+id/amountEditText"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
                 android:inputType="numberDecimal"
                 android:background="@drawable/custom_rectangle_edittext"
-                android:textSize="14sp">
+                android:textSize="17sp">
 
             </EditText>
         </LinearLayout>
@@ -228,7 +227,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:text="@string/note"
             android:textColor="@color/black"
@@ -238,9 +237,9 @@
         <EditText
             android:id="@+id/noteEditText"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/custom_rectangle_edittext"/>
     </LinearLayout>
