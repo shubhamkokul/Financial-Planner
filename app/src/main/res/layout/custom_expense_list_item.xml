@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_rectange">
+    android:background="@drawable/custom_rectangle">
 
 
     <LinearLayout
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:weightSum="2"
         android:orientation="vertical"
-        android:background="@drawable/custom_rectange"
+        android:background="@drawable/custom_rectangle"
         android:padding="8dp"
         android:backgroundTint="@color/red">
 

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:background="@drawable/custom_rectange"
+        android:background="@drawable/custom_rectangle"
         android:orientation="vertical">
     </RelativeLayout>
 
@@ -30,7 +30,7 @@
             android:backgroundTint="@color/red"
             android:clickable="true"
             android:padding="20dp"
-            app:srcCompat="@drawable/custom_rectange" />
+            app:srcCompat="@drawable/custom_rectangle" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/incomeFloatingActionButton"
@@ -40,7 +40,7 @@
             android:backgroundTint="@color/green"
             android:clickable="true"
             android:padding="20dp"
-            app:srcCompat="@drawable/custom_rectange" />
+            app:srcCompat="@drawable/custom_rectangle" />
     </RelativeLayout>
 
 </FrameLayout>

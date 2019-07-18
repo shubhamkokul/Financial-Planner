@@ -1,7 +1,9 @@
 package com.mumbai.financial.financialplanner;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import planner.MyValueFormatter;
 public class Home extends Fragment {
     private static final String START = "StartFragment";
     protected RelativeLayout placeholderHome;
+    private FloatingActionButton expenseFloatingActionButton, incomeFloatingActionButton;
     protected HorizontalBarChart horizontalBarChartActual, horizontalBarChartPlanned;
 
     @Nullable
@@ -38,6 +41,25 @@ public class Home extends Fragment {
         horizontalBarChartPlanned = view.findViewById(R.id.horizontalBarChartPlanned);
         showOverviewGraph(horizontalBarChartActual, 500.5f, 100);
         showOverviewGraph(horizontalBarChartPlanned, 60.0f, 700.53f);
+
+        expenseFloatingActionButton = view.findViewById(R.id.expenseFloatingActionButton);
+        incomeFloatingActionButton = view.findViewById(R.id.incomeFloatingActionButton);
+
+        expenseFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddExpense.class);
+                startActivity(intent);
+            }
+        });
+
+        incomeFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddIncome.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
