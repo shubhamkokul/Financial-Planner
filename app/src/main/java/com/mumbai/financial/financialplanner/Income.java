@@ -14,8 +14,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import planner.ExpenseIncomeModal;
-import planner.IncomeListViewAdapter;
+import planner.androidmodels.ExpenseIncomeModal;
+import planner.androidadapters.IncomeListViewAdapter;
 
 
 public class Income extends Fragment {

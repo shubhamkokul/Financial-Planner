@@ -23,7 +23,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import planner.MyValueFormatter;
+import planner.utility.MyValueFormatter;
 
 public class Home extends Fragment {
     private static final String START = "StartFragment";

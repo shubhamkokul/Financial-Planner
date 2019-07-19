@@ -1,16 +1,16 @@
 package planner.db.modal;
 
 public class PlanTypeModal {
-    private int id;
+    private long id;
 
-    public PlanTypeModal(String name) {
-        //id Logic
+    public PlanTypeModal(long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
     private String name;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

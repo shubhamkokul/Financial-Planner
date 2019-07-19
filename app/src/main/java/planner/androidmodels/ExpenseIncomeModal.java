@@ -1,4 +1,4 @@
-package planner;
+package planner.androidmodels;
 
 public class ExpenseIncomeModal {
 

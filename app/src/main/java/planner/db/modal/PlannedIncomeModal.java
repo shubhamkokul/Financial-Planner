@@ -27,7 +27,7 @@ public class PlannedIncomeModal {
         this.planned = planned;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

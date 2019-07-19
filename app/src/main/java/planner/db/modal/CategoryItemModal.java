@@ -1,19 +1,19 @@
 package planner.db.modal;
 
 public class CategoryItemModal {
-    private int id;
+    private long id;
     private String name;
     private int type;
     private String typeName;
 
-    public CategoryItemModal(String name, int type, String typeName) {
-        //id logic
+    public CategoryItemModal(long id, String name, int type, String typeName) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.typeName = typeName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

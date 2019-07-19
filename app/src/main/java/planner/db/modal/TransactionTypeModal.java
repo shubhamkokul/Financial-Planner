@@ -1,16 +1,22 @@
 package planner.db.modal;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 public class TransactionTypeModal {
-    private int id;
+    private long id;
     private int type;
     private String typeName;
 
-    public TransactionTypeModal(int type, String typeName) {
+    public TransactionTypeModal(long id, int type, String typeName) {
+        this.id = id;
         this.type = type;
         this.typeName = typeName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -30,4 +36,14 @@ public class TransactionTypeModal {
         this.typeName = typeName;
     }
 
+    public static void insertIntoTable(SQLiteDatabase db, List<TransactionTypeModal> transactionTypeModals) {
+        for(TransactionTypeModal transactionTypeModal : transactionTypeModals){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ID", transactionTypeModal.getId());
+            contentValues.put("TYPE", transactionTypeModal.getType());
+            contentValues.put("TYPENAME", transactionTypeModal.getTypeName());
+            db.insert("TRANSACTIONTYPETABLE", null, contentValues);
+        }
+        db.close();
+    }
 }

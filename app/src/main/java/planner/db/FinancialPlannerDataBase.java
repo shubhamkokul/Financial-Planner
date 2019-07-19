@@ -10,7 +10,7 @@ public class FinancialPlannerDataBase extends SQLiteOpenHelper {
 
     public FinancialPlannerDataBase(Context context, int version) {
         super(context, DATABASE_NAME, null, version);
-        SQLiteDatabase db = this.getWritableDatabase();
+        this.getWritableDatabase();
 
     }
 
@@ -33,64 +33,78 @@ public class FinancialPlannerDataBase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onCreate(db);
 
     }
-    public void createExpensePlannerTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE EXPENSEPLANTABLE(ID INTEGER PRIMARY KEY, PLANTYPE INTEGER, PLANTYPENAME TEXT, DESCRIPTION TEXT, MONTHID INTEGER," +
+
+    private void createExpensePlannerTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE EXPENSEPLANTABLE(ID BIGINT PRIMARY KEY, PLANTYPE INTEGER, PLANTYPENAME TEXT, DESCRIPTION TEXT, MONTHID INTEGER," +
                 "MONTHNAME TEXT, YEARID INTEGER, YEARNAME INTEGER)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createIncomePlannerTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE INCOMEPLANTABLE(ID INTEGER PRIMARY KEY, DESCRIPTION TEXT, MONTHID INTEGER," +
+
+    private void createIncomePlannerTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE INCOMEPLANTABLE(ID BIGINT PRIMARY KEY, DESCRIPTION TEXT, MONTHID INTEGER," +
                 "MONTHNAME TEXT, YEARID INTEGER, YEARNAME INTEGER)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createPlanTypeTable(SQLiteDatabase db){
-        String CREATE_TABLE = "CREATE TABLE PLAYTYPETABLE(ID INTEGER PRIMARY KEY, NAME TEXT)";
+
+    private void createPlanTypeTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE PLAYTYPETABLE(ID BIGINT PRIMARY KEY, NAME TEXT)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createWalletPlannerTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE WALLETPLANTABLE(ID INTEGER PRIMARY KEY, NAME TEXT, ICON INTEGER, ICONNAME TEXT, AMOUNT FLOAT)";
+
+    private void createWalletPlannerTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE WALLETPLANTABLE(ID BIGINT PRIMARY KEY, NAME TEXT, ICON INTEGER, ICONNAME TEXT, AMOUNT FLOAT)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createCategoryItemTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE CATEGORYITEMTABLE(ID INTEGER PRIMARY KEY, NAME TEXT, TYPE INTEGER, TYPENAME TEXT)";
+
+    private void createCategoryItemTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE CATEGORYITEMTABLE(ID BIGINT PRIMARY KEY, NAME TEXT, TYPE INTEGER, TYPENAME TEXT)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createMonthTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE MONTHTABLE(ID INTEGER PRIMARY KEY, ACTUALPOSITION INTEGER, NAME TEXT)";
+
+    private void createMonthTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE MONTHTABLE(ID BIGINT PRIMARY KEY, ACTUALPOSITION INTEGER, NAME TEXT)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createYearTable(SQLiteDatabase db) {
-        String CREATE_TABLE ="CREATE TABLE YEARTABLE(ID INTEGER PRIMARY KEY, YEAR INTEGER)";
+
+    private void createYearTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE YEARTABLE(ID BIGINT PRIMARY KEY, YEAR INTEGER)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createTransactionTypeTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE TRANSACTIONTYPETABLE(ID INTEGER PRIMARY KEY, TYPE INTEGER, TYPENAME TEXT)";
+
+    private void createTransactionTypeTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE TRANSACTIONTYPETABLE(ID BIGINT PRIMARY KEY, TYPE INTEGER, TYPENAME TEXT)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createPlannedExpenseTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE PLANNEDEXPENSETABLE(ID INTEGER PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
+
+    private void createPlannedExpenseTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE PLANNEDEXPENSETABLE(ID BIGINT PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
                 ", CATEGORYID INTEGER, CATEGORYNAME TEXT, DATE DATE, AMOUNT FLOAT, PLANNED BOOL)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createActualExpenseTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE ACTUALEXPENSETABLE(ID INTEGER PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
+
+    private void createActualExpenseTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE ACTUALEXPENSETABLE(ID BIGINT PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
                 ", CATEGORYID INTEGER, CATEGORYNAME TEXT, DATE DATE, AMOUNT FLOAT, PLANNED BOOL)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createPlannedIncomeTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE PLANNEDINCOMETABLE(ID INTEGER PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
+
+    private void createPlannedIncomeTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE PLANNEDINCOMETABLE(ID BIGINT PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
                 ", CATEGORYID INTEGER, CATEGORYNAME TEXT, DATE DATE, AMOUNT FLOAT, PLANNED BOOL)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createActualIncomeTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE ACTUALINCOMETABLE(ID INTEGER PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
+
+    private void createActualIncomeTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE ACTUALINCOMETABLE(ID BIGINT PRIMARY KEY, ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PLANID INTEGER, PLANNAME TEXT" +
                 ", CATEGORYID INTEGER, CATEGORYNAME TEXT, DATE DATE, AMOUNT FLOAT, PLANNED BOOL)";
         db.execSQL(CREATE_TABLE);
     }
-    public void createTransactionTable(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE TRANSACTIONTABLE(ID INTEGER PRIMARY KEY, DATE DATE, TIMESTAMP INTEGER, PLANID INTEGER, PLANNAME TEXT," +
+
+    private void createTransactionTable(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE TRANSACTIONTABLE(ID BIGINT PRIMARY KEY, DATE DATE, TIMESTAMP INTEGER, PLANID INTEGER, PLANNAME TEXT," +
                 "ACCOUNTID INTEGER, ACCOUNTNAME TEXT, PREVIOUSAMOUNT FLOAT, CURRENTAMOUNT FLOAT, CATEGORYTYPE INTEGER, CATEGORYNAME TEXT," +
                 "TRANSACTIONTYPE INTEGER, TRANSACTIONNAME TEXT, PLANNED BOOL)";
         db.execSQL(CREATE_TABLE);

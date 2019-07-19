@@ -1,4 +1,4 @@
-package planner;
+package planner.androidadapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

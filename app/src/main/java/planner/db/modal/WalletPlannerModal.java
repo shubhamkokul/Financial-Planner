@@ -1,22 +1,23 @@
 package planner.db.modal;
 
 public class WalletPlannerModal {
-    private int id;
+    private long id;
+    private String name;
+    private int icon;
+    private String iconName;
+    private double amount;
 
-    public WalletPlannerModal(String name, int icon, String iconName, double amount) {
-        //id logic
+    public WalletPlannerModal(long id, String name, int icon, String iconName, double amount) {
+        this.id = id;
         this.name = name;
         this.icon = icon;
         this.iconName = iconName;
         this.amount = amount;
     }
 
-    private String name;
-    private int icon;
-    private String iconName;
-    private double amount;
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 

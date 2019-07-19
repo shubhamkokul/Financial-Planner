@@ -8,10 +8,10 @@ public class ExpensePlannerModal {
     private String monthName;
     private int yearId;
     private int yearName;
-    private int id; //Timestamp
+    private long id; //Timestamp
 
-    public ExpensePlannerModal(int planType, String planTypeName, String description, int monthId, String monthName, int yearId, int yearName) {
-        /*this.id = //timestamp logic*/
+    public ExpensePlannerModal(long id,int planType, String planTypeName, String description, int monthId, String monthName, int yearId, int yearName) {
+        this.id = id;
         this.planType = planType;
         this.planTypeName = planTypeName;
         this.description = description;
@@ -77,7 +77,7 @@ public class ExpensePlannerModal {
         this.yearName = yearName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

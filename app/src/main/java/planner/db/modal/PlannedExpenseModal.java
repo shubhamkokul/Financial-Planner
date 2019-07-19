@@ -3,7 +3,7 @@ package planner.db.modal;
 import java.util.Date;
 
 public class PlannedExpenseModal {
-    private int id;
+    private long id;
     private int accountId;
     private String accountName;
     private int planId;
@@ -14,7 +14,7 @@ public class PlannedExpenseModal {
     private double amount;
     private boolean planned;
 
-    public PlannedExpenseModal(int id, int accountId, String accountName, int planId, String planName, int categoryId, String categoryName, Date date, double amount, boolean planned) {
+    public PlannedExpenseModal(long id, int accountId, String accountName, int planId, String planName, int categoryId, String categoryName, Date date, double amount, boolean planned) {
         this.id = id;
         this.accountId = accountId;
         this.accountName = accountName;
@@ -27,7 +27,7 @@ public class PlannedExpenseModal {
         this.planned = planned;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

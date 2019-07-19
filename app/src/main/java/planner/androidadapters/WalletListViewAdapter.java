@@ -1,4 +1,4 @@
-package planner;
+package planner.androidadapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,6 +13,8 @@ import com.mumbai.financial.financialplanner.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import planner.androidmodels.WalletModal;
 
 public class WalletListViewAdapter extends ArrayAdapter<WalletModal> {
 

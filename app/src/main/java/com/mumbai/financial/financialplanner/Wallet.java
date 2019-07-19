@@ -2,7 +2,6 @@ package com.mumbai.financial.financialplanner;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,8 +13,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import planner.WalletListViewAdapter;
-import planner.WalletModal;
+import planner.androidadapters.WalletListViewAdapter;
+import planner.androidmodels.WalletModal;
 
 public class Wallet extends Fragment {
 

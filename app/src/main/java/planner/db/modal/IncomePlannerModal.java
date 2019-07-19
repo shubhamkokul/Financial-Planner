@@ -6,10 +6,10 @@ public class IncomePlannerModal {
     private String monthName;
     private int yearId;
     private int yearName;
-    private int id; //Timestamp
+    private long id; //Timestamp
 
-    public IncomePlannerModal(String description, int monthId, String monthName, int yearId, int yearName) {
-        /*this.id = //timestamp logic*/
+    public IncomePlannerModal(long id, String description, int monthId, String monthName, int yearId, int yearName) {
+        this.id = id;
         this.description = description;
         this.monthId = monthId;
         this.monthName = monthName;
@@ -57,7 +57,7 @@ public class IncomePlannerModal {
         this.yearName = yearName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 }
