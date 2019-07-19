@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ExpenseDetailView"></activity>
+        <activity android:name=".WelcomeScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".WalletDetailView" />
+        <activity android:name=".IncomeDetailView" />
+        <activity android:name=".ExpenseDetailView" />
         <activity android:name=".AddIncome" />
         <activity android:name=".AddExpense" />
         <activity android:name=".WalletPlanner" />

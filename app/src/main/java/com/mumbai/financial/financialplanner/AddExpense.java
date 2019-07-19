@@ -7,13 +7,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 public class AddExpense extends AppCompatActivity {
 
     private ImageView backButton;
     private Spinner accountTypeSpinner, planTypeSpinner, categoryTypeSpinner, dateSpinner;
-    private EditText amountEditText, noteEditText;
+    private EditText amountEditText;
     private Button addExpensePlanButton, saveExpense;
+    private Switch planSwitch;
 
 
     @Override
@@ -26,7 +28,7 @@ public class AddExpense extends AppCompatActivity {
         categoryTypeSpinner = findViewById(R.id.categoryTypeSpinner);
         dateSpinner = findViewById(R.id.dateSpinner);
         amountEditText = findViewById(R.id.amountEditText);
-        noteEditText = findViewById(R.id.noteEditText);
+        planSwitch = findViewById(R.id.planSwitch);
         addExpensePlanButton = findViewById(R.id.addExpensePlanButton);
         saveExpense = findViewById(R.id.saveExpense);
 

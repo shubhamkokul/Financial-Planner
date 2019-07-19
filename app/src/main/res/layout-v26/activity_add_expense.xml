@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddIncome"
+    tools:context=".AddExpense"
     android:background="@color/tan">
 
-
     <LinearLayout
-        android:id="@+id/titleIncome"
+        android:id="@+id/titleExpense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green"
+        android:background="@color/red"
         android:orientation="horizontal">
 
         <ImageView
@@ -31,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="@string/add_income"
+            android:text="@string/add_expense"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -41,7 +40,7 @@
         android:id="@+id/accountLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/titleIncome"
+        android:layout_below="@+id/titleExpense"
         android:orientation="vertical">
 
         <TextView
@@ -104,14 +103,15 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/addIncomePlanButton"
+            android:id="@+id/addExpensePlanButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginRight="5dp"
             android:layout_weight=".1"
             android:background="@drawable/custom_rectangle_button"
-            android:text="@string/add"  />
+            android:text="@string/add"
+            android:layout_marginEnd="5dp" />
 
     </LinearLayout>
 
@@ -151,7 +151,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryLinear"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:baselineAligned="false">
 
 
         <LinearLayout
@@ -179,7 +180,6 @@
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/custom_rectangle_spinner">
-
             </Spinner>
         </LinearLayout>
 
@@ -209,45 +209,47 @@
                 android:layout_margin="5dp"
                 android:inputType="numberDecimal"
                 android:background="@drawable/custom_rectangle_edittext"
-                android:textSize="17sp">
+                android:textSize="17sp"
+                android:autofillHints="@string/_500">
 
             </EditText>
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/planTypeLinear"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/noteTypeLinear"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dateAmountLinear"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
+        
         <TextView
-            android:id="@+id/planBooleanTextView"
-            android:layout_width="wrap_content"
+            android:id="@+id/noteTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/planned"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/note"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <Switch
-            android:id="@+id/planSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_toRightOf="@id/planBooleanTextView" />
-
-    </RelativeLayout>
+        <EditText
+            android:id="@+id/noteEditText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/custom_rectangle_edittext"/>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/saveIncome"
+        android:id="@+id/saveExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/planTypeLinear"
+        android:layout_below="@+id/noteTypeLinear"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:text="@string/save"

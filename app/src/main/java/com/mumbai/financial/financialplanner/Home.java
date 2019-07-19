@@ -60,7 +60,6 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
     public void showOverviewGraph(HorizontalBarChart horizontalBarChartCurrent, float income, float expense) {
@@ -101,4 +100,5 @@ public class Home extends Fragment {
         horizontalBarChartCurrent.invalidate();
 
     }
+
 }
