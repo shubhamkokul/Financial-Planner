@@ -215,40 +215,39 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/noteTypeLinear"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/planTypeLinear"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dateAmountLinear"
-        android:orientation="vertical">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/noteTextView"
-            android:layout_width="match_parent"
+            android:id="@+id/planBooleanTextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/note"
+            android:layout_margin="10dp"
+            android:text="@string/planned"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/noteEditText"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/custom_rectangle_edittext"/>
-    </LinearLayout>
+        <Switch
+            android:id="@+id/planSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@id/planBooleanTextView" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/saveIncome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/noteTypeLinear"
+        android:layout_below="@+id/planTypeLinear"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:text="@string/save"

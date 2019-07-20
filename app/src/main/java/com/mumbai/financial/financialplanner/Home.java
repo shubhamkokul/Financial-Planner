@@ -23,7 +23,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import planner.MyValueFormatter;
+import planner.utility.MyValueFormatter;
 
 public class Home extends Fragment {
     private static final String START = "StartFragment";
@@ -60,7 +60,6 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
     public void showOverviewGraph(HorizontalBarChart horizontalBarChartCurrent, float income, float expense) {
@@ -101,4 +100,5 @@ public class Home extends Fragment {
         horizontalBarChartCurrent.invalidate();
 
     }
+
 }

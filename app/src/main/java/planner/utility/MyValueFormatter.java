@@ -1,4 +1,4 @@
-package planner;
+package planner.utility;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IValueFormatter;

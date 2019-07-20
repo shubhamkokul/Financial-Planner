@@ -1,4 +1,4 @@
-package planner;
+package planner.androidadapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import com.mumbai.financial.financialplanner.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import planner.androidmodels.ExpenseIncomeModal;
 
 public class IncomeListViewAdapter extends ArrayAdapter<ExpenseIncomeModal> {
 

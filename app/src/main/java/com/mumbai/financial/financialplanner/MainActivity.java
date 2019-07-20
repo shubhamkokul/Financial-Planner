@@ -1,25 +1,25 @@
 package com.mumbai.financial.financialplanner;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import planner.SectionPageAdapter;
+import planner.androidadapters.SectionPageAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private static final String START = "MainActivity";
-    private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
-    protected TabLayout tabLayout;
+    private TabLayout tabLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
-
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
@@ -33,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        int pageView = tabLayout.getSelectedTabPosition();
+        if(pageView == 0){
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        } else {
+            mViewPager.setCurrentItem(0);
+        }
 
-
+    }
 }

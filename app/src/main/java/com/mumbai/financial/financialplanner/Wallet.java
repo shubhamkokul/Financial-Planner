@@ -2,19 +2,19 @@ package com.mumbai.financial.financialplanner;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import planner.WalletListViewAdapter;
-import planner.WalletModal;
+import planner.androidadapters.WalletListViewAdapter;
+import planner.androidmodels.WalletModal;
 
 public class Wallet extends Fragment {
 
@@ -48,7 +48,19 @@ public class Wallet extends Fragment {
             }
         });
 
+        walletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openDetailView(position);
+            }
+        });
+
         return view;
+    }
+    public void openDetailView(int position){
+        Intent intent = new Intent(getActivity(), ExpenseDetailView.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 
 }
