@@ -12,19 +12,19 @@ import com.mumbai.financial.financialplanner.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import planner.androidmodels.ExpenseIncomeModal;
+import planner.db.modal.IncomePlannerModal;
 
-public class IncomeListViewAdapter extends ArrayAdapter<ExpenseIncomeModal> {
+public class IncomeListViewAdapter extends ArrayAdapter<IncomePlannerModal> {
 
     private static final String TAG = "ExpenseListViewAdapter";
     private final LayoutInflater mInflater;
-    private TextView year3Word, month3Word, fullMonthDate, monthName;
-    private List<ExpenseIncomeModal> expenseIncomeModalArrayList = new ArrayList<>();
+    private TextView year3Word, month3Word, monthName, description;
+    private List<IncomePlannerModal> incomePlannerModals;
 
-    public IncomeListViewAdapter(Context context, List<ExpenseIncomeModal> expenseIncomeModalArrayList) {
-        super(context, R.layout.custom_income_list_item, expenseIncomeModalArrayList);
+    public IncomeListViewAdapter(Context context, List<IncomePlannerModal> incomePlannerModals) {
+        super(context, R.layout.custom_income_list_item, incomePlannerModals);
         this.mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.expenseIncomeModalArrayList = expenseIncomeModalArrayList;
+        this.incomePlannerModals = incomePlannerModals;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -37,14 +37,14 @@ public class IncomeListViewAdapter extends ArrayAdapter<ExpenseIncomeModal> {
 
         year3Word = view.findViewById(R.id.year3Word);
         month3Word = view.findViewById(R.id.month3Word);
-        fullMonthDate = view.findViewById(R.id.fullMonthDate);
         monthName = view.findViewById(R.id.monthName);
+        description = view.findViewById(R.id.description);
 
 
-        year3Word.setText(expenseIncomeModalArrayList.get(position).getYear());
-        month3Word.setText(expenseIncomeModalArrayList.get(position).getMonth());
-        fullMonthDate.setText(expenseIncomeModalArrayList.get(position).getFullMonthDate());
-        monthName.setText(expenseIncomeModalArrayList.get(position).getMonthStatement());
+        year3Word.setText(incomePlannerModals.get(position).getYearName()+"");
+        month3Word.setText(incomePlannerModals.get(position).getMonthName().substring(0, 3));
+        monthName.setText(incomePlannerModals.get(position).getMonthName());
+        description.setText(incomePlannerModals.get(position).getDescription());
         return view;
     }
 }

@@ -1,27 +1,32 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WalletPlannerModal {
     private long id;
     private String name;
-
-
     private long iconID;
     private int icon;
     private String iconName;
-    private double amount;
+    private double incomeBalance;
+    private double expenseBalance;
+    private double balance;
 
-    public WalletPlannerModal(long id, String name, long iconID, int icon, String iconName, double amount) {
+
+    public WalletPlannerModal(long id, String name, long iconID, int icon, String iconName, double incomeBalance, double expenseBalance, double balance) {
         this.id = id;
         this.name = name;
         this.iconID = iconID;
         this.icon = icon;
         this.iconName = iconName;
-        this.amount = amount;
+        this.incomeBalance = incomeBalance;
+        this.expenseBalance = expenseBalance;
+        this.balance = balance;
     }
 
 
@@ -53,12 +58,12 @@ public class WalletPlannerModal {
         this.iconName = iconName;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public long getIconID() {
@@ -69,17 +74,48 @@ public class WalletPlannerModal {
         this.iconID = iconID;
     }
 
-    public static void insertIntoTableInitial(SQLiteDatabase dbWriter, List<WalletPlannerModal> walletPlannerModals) {
+    public double getIncomeBalance() {
+        return incomeBalance;
+    }
+
+    public void setIncomeBalance(double incomeBalance) {
+        this.incomeBalance = incomeBalance;
+    }
+
+    public double getExpenseBalance() {
+        return expenseBalance;
+    }
+
+    public void setExpenseBalance(double expenseBalance) {
+        this.expenseBalance = expenseBalance;
+    }
+
+    public static void insertIntoTableInitial(SQLiteDatabase db, List<WalletPlannerModal> walletPlannerModals) {
         for (WalletPlannerModal walletPlannerModal : walletPlannerModals) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ID", walletPlannerModal.getId());
-            contentValues.put("NAME", walletPlannerModal.getIcon());
+            contentValues.put("NAME", walletPlannerModal.getName());
             contentValues.put("ICONID", walletPlannerModal.getIconID());
             contentValues.put("ICON", walletPlannerModal.getIcon());
             contentValues.put("ICONNAME", walletPlannerModal.getIconName());
-            contentValues.put("AMOUNT", walletPlannerModal.getAmount());
-            dbWriter.insert("WALLETPLANTABLE", null, contentValues);
+            contentValues.put("INCOMEBALANCE", walletPlannerModal.getBalance());
+            contentValues.put("EXPENSEBALANCE", walletPlannerModal.getBalance());
+            contentValues.put("BALANCE", walletPlannerModal.getBalance());
+            db.insert("WALLETPLANTABLE", null, contentValues);
         }
-        dbWriter.close();
+        db.close();
     }
+
+    public static List<WalletPlannerModal> returnAll(SQLiteDatabase dbReader) {
+        List<WalletPlannerModal> walletPlannerModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM WALLETPLANTABLE", null);
+        if(c.moveToFirst()){
+            do{
+                walletPlannerModals.add(new WalletPlannerModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4), c.getFloat(5)
+                ,c.getFloat(6),c.getFloat(7)));
+            } while(c.moveToNext());
+        }
+        return walletPlannerModals;
+    }
+
 }

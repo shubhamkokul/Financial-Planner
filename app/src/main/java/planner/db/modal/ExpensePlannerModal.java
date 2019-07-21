@@ -1,8 +1,10 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensePlannerModal {
@@ -16,7 +18,7 @@ public class ExpensePlannerModal {
     private String monthName;
     private long yearID;
     private int yearName;
-
+  
     public ExpensePlannerModal(long id, long planID, int planType, String planTypeName, String description, long monthID, int month, String monthName, long yearID, int yearName) {
         this.id = id;
         this.planID = planID;
@@ -30,7 +32,21 @@ public class ExpensePlannerModal {
         this.yearName = yearName;
     }
 
+    public long getPlanID() {
+        return planID;
+    }
 
+    public void setPlanID(long planID) {
+        this.planID = planID;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
     public int getPlanType() {
         return planType;
     }
@@ -54,7 +70,13 @@ public class ExpensePlannerModal {
     public void setDescription(String description) {
         this.description = description;
     }
+    public long getMonthID() {
+        return monthID;
+    }
 
+    public void setMonthID(long monthID) {
+        this.monthID = monthID;
+    }
 
     public String getMonthName() {
         return monthName;
@@ -64,6 +86,13 @@ public class ExpensePlannerModal {
         this.monthName = monthName;
     }
 
+    public long getYearID() {
+        return yearID;
+    }
+
+    public void setYearID(long yearID) {
+        this.yearID = yearID;
+    }
 
     public int getYearName() {
         return yearName;
@@ -76,41 +105,6 @@ public class ExpensePlannerModal {
     public long getId() {
         return id;
     }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public long getMonthID() {
-        return monthID;
-    }
-
-    public void setMonthID(long monthID) {
-        this.monthID = monthID;
-    }
-
-    public long getYearID() {
-        return yearID;
-    }
-
-    public void setYearID(long yearID) {
-        this.yearID = yearID;
-    }
-
-
-    public long getPlanID() {
-        return planID;
-    }
-
-    public void setPlanID(long planID) {
-        this.planID = planID;
-    }
-
-
     public static void insertIntoTableInitial(SQLiteDatabase dbWriter, List<ExpensePlannerModal> expensePlannerModals) {
         for (ExpensePlannerModal expensePlannerModal : expensePlannerModals) {
             ContentValues contentValues = new ContentValues();
@@ -127,6 +121,18 @@ public class ExpensePlannerModal {
             dbWriter.insert("EXPENSEPLANTABLE", null, contentValues);
         }
         dbWriter.close();
+    }
+
+    public static List<ExpensePlannerModal> returnAll(SQLiteDatabase dbReader){
+        List<ExpensePlannerModal> expensePlannerModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM EXPENSEPLANTABLE", null);
+        if(c.moveToFirst()){
+            do{
+                expensePlannerModals.add(new ExpensePlannerModal(c.getLong(0),c.getLong(1), c.getInt(2), c.getString(3), c.getString(4), c.getLong(5)
+                ,c.getInt(6), c.getString(7), c.getLong(8), c.getInt(9)));
+            } while(c.moveToNext());
+        }
+        return expensePlannerModals;
     }
 
 }

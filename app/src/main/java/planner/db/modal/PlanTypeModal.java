@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlanTypeModal {
@@ -23,7 +23,6 @@ public class PlanTypeModal {
         this.type = type;
         this.typeName = typeName;
     }
-
     public long getTypeID() {
         return typeID;
     }
@@ -80,5 +79,18 @@ public class PlanTypeModal {
         c.close();
         db.close();
         return planTypeModal;
+    }
+  
+    public static List<PlanTypeModal> returnAll(SQLiteDatabase dbReader) {
+        List<PlanTypeModal> planTypeModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM PLANTYPETABLE", null);
+        if (c.moveToFirst()){
+            do {
+                planTypeModals.add(new PlanTypeModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4)));
+            } while(c.moveToNext());
+        }
+        c.close();
+        dbReader.close();
+        return planTypeModals;
     }
 }

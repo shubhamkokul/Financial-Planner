@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.mumbai.financial.financialplanner.R;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -321,8 +320,10 @@ public class PopulateInitialTables {
             long iconID = iconModals.get(i).getId();
             int icon = iconModals.get(i).getIcon();
             String iconName = iconModals.get(i).getIconName();
-            double amount = 0;
-            walletPlannerModals.add(new WalletPlannerModal(id, name, iconID, icon, iconName, amount));
+            double incomeBalance = 0;
+            double expenseBalance = 0;
+            double balance = 0;
+            walletPlannerModals.add(new WalletPlannerModal(id, name, iconID, icon, iconName, incomeBalance, expenseBalance, balance));
             i++;
         }
         WalletPlannerModal.insertIntoTableInitial(dbWriter, walletPlannerModals);
@@ -345,7 +346,7 @@ public class PopulateInitialTables {
             long planID = planTypeModal.getId();
             int planType = planTypeModal.getType();
             String planTypeName = planTypeModal.getName();
-            String description = planTypeModal.getTypeName();
+            String description = "All my "+planTypeModal.getTypeName().toLowerCase()+" for "+monthModals.get(date.getMonth() + i).getName()+" "+yearModal.getYear();
             long monthID = monthModals.get(date.getMonth() + i).getId();
             int month = monthModals.get(date.getMonth() + i).getActualPosition();
             String monthName = monthModals.get(date.getMonth() + i).getName();
@@ -369,7 +370,7 @@ public class PopulateInitialTables {
         int i = 0;
         while (i < 3) {
             long id = IdentifierGenerator.timeStampGenerator();
-            String description = planTypeModal.getTypeName();
+            String description = "All my "+planTypeModal.getTypeName().toLowerCase()+" for "+monthModals.get(date.getMonth() + i).getName()+" "+yearModal.getYear();
             long monthID = monthModals.get(date.getMonth() + i).getId();
             int month = monthModals.get(date.getMonth() + i).getActualPosition();
             String monthName = monthModals.get(date.getMonth() + i).getName();

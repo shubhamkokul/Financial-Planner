@@ -1,6 +1,7 @@
 package com.mumbai.financial.financialplanner;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +16,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import planner.androidmodels.ExpenseIncomeModal;
 import planner.androidadapters.ExpenseListViewAdapter;
+import planner.db.FinancialDatabaseWriter;
+import planner.db.modal.ExpensePlannerModal;
 
 
 public class Expenses extends Fragment {
@@ -24,17 +26,13 @@ public class Expenses extends Fragment {
     private static final String TAG = "Expenses";
     private ListView expenseListView;
     private ImageView plusSignButton;
-    private List<ExpenseIncomeModal> expenseIncomeModalArrayList = new ArrayList<>();
+    private List<ExpensePlannerModal> expenseIncomeModalArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_expenses, container, false);
-        expenseIncomeModalArrayList = new ArrayList<>();
-        expenseIncomeModalArrayList.add(new ExpenseIncomeModal("2019","JAN","1.01.2019 - 31.01.2019", "All my expense for Jan 2019"));
-        expenseIncomeModalArrayList.add(new ExpenseIncomeModal("2019","FEB","1.02.2019 - 28.02.2019", "All my expense for FEB 2019"));
-        expenseIncomeModalArrayList.add(new ExpenseIncomeModal("2019","MAR","1.03.2019 - 31.03.2019", "All my expense for MAR 2019"));
-        expenseIncomeModalArrayList.add(new ExpenseIncomeModal("2019","APR","1.04.2019 - 30.04.2019", "All my expense for APR 2019"));
-        expenseIncomeModalArrayList.add(new ExpenseIncomeModal("2019","MAY","1.05.2019 - 31.05.2019", "All my expense for MAY 2019"));
+        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getActivity(), 1).getDatabaseReader();
+        expenseIncomeModalArrayList = ExpensePlannerModal.returnAll(dbReader);
 
         expenseListView = view.findViewById(R.id.expenseListView);
         ExpenseListViewAdapter adapter = new ExpenseListViewAdapter(getActivity(), expenseIncomeModalArrayList);

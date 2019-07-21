@@ -11,9 +11,7 @@ public class CategoryItemModal {
     private long typeID;
     private int type;
     private String typeName;
-
-
-
+  
     public CategoryItemModal(long id, String name, long typeID, int type, String typeName) {
         this.id = id;
         this.name = name;
@@ -21,18 +19,12 @@ public class CategoryItemModal {
         this.type = type;
         this.typeName = typeName;
     }
+    public long getTypeID() {
+        return typeID;
+    }
 
-    public static void insertIntoTable(SQLiteDatabase dbWriter, List<CategoryItemModal> categoryItemModals) {
-        for(CategoryItemModal categoryItemModal  : categoryItemModals){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("ID", categoryItemModal.getId());
-            contentValues.put("NAME", categoryItemModal.getName());
-            contentValues.put("TYPEID", categoryItemModal.getTypeID());
-            contentValues.put("TYPE", categoryItemModal.getType());
-            contentValues.put("TYPENAME", categoryItemModal.getTypeName());
-            dbWriter.insert("CATEGORYITEMTABLE", null, contentValues);
-        }
-        dbWriter.close();
+    public void setTypeID(long typeID) {
+        this.typeID = typeID;
     }
 
     public long getId() {
@@ -63,12 +55,17 @@ public class CategoryItemModal {
         this.typeName = typeName;
     }
 
-    public long getTypeID() {
-        return typeID;
-    }
-
-    public void setTypeID(long typeID) {
-        this.typeID = typeID;
+    public static void insertIntoTable(SQLiteDatabase db, List<CategoryItemModal> categoryItemModals) {
+        for(CategoryItemModal categoryItemModal : categoryItemModals){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ID", categoryItemModal.getId());
+            contentValues.put("NAME", categoryItemModal.getName());
+            contentValues.put("TYPEID", categoryItemModal.getTypeID());
+            contentValues.put("TYPE", categoryItemModal.getType());
+            contentValues.put("TYPENAME", categoryItemModal.getTypeName());
+            db.insert("CATEGORYITEMTABLE", null, contentValues);
+        }
+        db.close();
     }
 
 }
