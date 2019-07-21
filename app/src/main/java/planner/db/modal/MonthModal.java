@@ -1,8 +1,10 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonthModal {
@@ -15,6 +17,7 @@ public class MonthModal {
         this.actualPosition = actualPosition;
         this.name = name;
     }
+
 
     public long getId() {
         return id;
@@ -45,6 +48,19 @@ public class MonthModal {
             db.insert("MONTHTABLE", null, contentValues);
         }
         db.close();
+    }
+
+    public static List<MonthModal> returnAll(SQLiteDatabase db) {
+        List<MonthModal> monthModals = new ArrayList<>();
+        Cursor c = db.rawQuery("SELECT * FROM MONTHTABLE", null);
+        if (c.moveToFirst()){
+            do {
+                monthModals.add(new MonthModal(c.getLong(0), c.getInt(1), c.getString(2)));
+            } while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return monthModals;
     }
 
 }

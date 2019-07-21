@@ -1,36 +1,47 @@
 package planner.db.modal;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 public class IncomePlannerModal {
     private String description;
-    private int monthId;
+    private long monthID;
+    private int month;
     private String monthName;
-    private int yearId;
+    private long yearID;
+
+
+
     private int yearName;
     private long id; //Timestamp
 
-    public IncomePlannerModal(long id, String description, int monthId, String monthName, int yearId, int yearName) {
+    public IncomePlannerModal(long id, String description, long monthID, int month, String monthName, long yearID, int yearName) {
         this.id = id;
         this.description = description;
-        this.monthId = monthId;
+        this.monthID = monthID;
+        this.month = month;
         this.monthName = monthName;
-        this.yearId = yearId;
+        this.yearID = yearID;
         this.yearName = yearName;
     }
 
-    public String getDescription() {
-        return description;
+
+    public long getMonthID() {
+        return monthID;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMonthID(long monthID) {
+        this.monthID = monthID;
     }
 
-    public int getMonthId() {
-        return monthId;
+    public int getMonth() {
+        return month;
     }
 
-    public void setMonthId(int monthId) {
-        this.monthId = monthId;
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     public String getMonthName() {
@@ -41,12 +52,12 @@ public class IncomePlannerModal {
         this.monthName = monthName;
     }
 
-    public int getYearId() {
-        return yearId;
+    public long getYearID() {
+        return yearID;
     }
 
-    public void setYearId(int yearId) {
-        this.yearId = yearId;
+    public void setYearID(long yearID) {
+        this.yearID = yearID;
     }
 
     public int getYearName() {
@@ -57,7 +68,30 @@ public class IncomePlannerModal {
         this.yearName = yearName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public long getId() {
         return id;
     }
+
+    public static void insertIntoTableInitial(SQLiteDatabase dbWriter, List<IncomePlannerModal> incomePlannerModals) {
+        for (IncomePlannerModal incomePlannerModal : incomePlannerModals) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ID", incomePlannerModal.getId());
+            contentValues.put("DESCRIPTION", incomePlannerModal.getDescription());
+            contentValues.put("MONTHID", incomePlannerModal.getMonthID());
+            contentValues.put("MONTH", incomePlannerModal.getMonth());
+            contentValues.put("MONTHNAME", incomePlannerModal.getMonthName());
+            contentValues.put("YEARID", incomePlannerModal.getYearID());
+            contentValues.put("YEARNAME", incomePlannerModal.getYearName());
+            dbWriter.insert("INCOMEPLANTABLE", null, contentValues);
+        }
+        dbWriter.close();
+    }
+
 }
