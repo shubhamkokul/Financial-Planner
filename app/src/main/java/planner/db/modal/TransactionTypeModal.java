@@ -1,11 +1,15 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionTypeModal {
+    private static final String TAG = "TransactionTypeModal";
     private long id;
     private int type;
     private String typeName;
@@ -45,5 +49,13 @@ public class TransactionTypeModal {
             db.insert("TRANSACTIONTYPETABLE", null, contentValues);
         }
         db.close();
+    }
+    public static TransactionTypeModal returnType(SQLiteDatabase db, String type) {
+        Cursor c = db.rawQuery("SELECT * FROM TRANSACTIONTYPETABLE WHERE TYPENAME ='"+type.trim()+"'" ,null);
+        c.moveToFirst();
+        TransactionTypeModal transactionTypeModal = new TransactionTypeModal(c.getLong(0), c.getInt(1), c.getString(2));
+        c.close();
+        db.close();
+        return transactionTypeModal;
     }
 }
