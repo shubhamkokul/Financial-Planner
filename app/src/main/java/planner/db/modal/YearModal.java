@@ -1,6 +1,7 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class YearModal {
     }
 
     public static void insertIntoTable(SQLiteDatabase db, List<YearModal> yearModals) {
-        for(YearModal yearModal : yearModals){
+        for (YearModal yearModal : yearModals) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ID", yearModal.getId());
             contentValues.put("YEAR", yearModal.getYear());
@@ -23,6 +24,7 @@ public class YearModal {
         }
         db.close();
     }
+
 
     public long getId() {
         return id;
@@ -36,5 +38,12 @@ public class YearModal {
         this.year = year;
     }
 
-
+    public static YearModal returnYear(SQLiteDatabase dbReader, int year) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM YEARTABLE WHERE YEAR ='" + year + "'", null);
+        c.moveToFirst();
+        YearModal yearModal = new YearModal(c.getLong(0), c.getInt(1));
+        c.close();
+        dbReader.close();
+        return yearModal;
+    }
 }
