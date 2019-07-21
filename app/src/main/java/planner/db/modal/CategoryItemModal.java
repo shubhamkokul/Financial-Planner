@@ -11,7 +11,7 @@ public class CategoryItemModal {
     private long typeID;
     private int type;
     private String typeName;
-
+  
     public CategoryItemModal(long id, String name, long typeID, int type, String typeName) {
         this.id = id;
         this.name = name;
@@ -19,7 +19,6 @@ public class CategoryItemModal {
         this.type = type;
         this.typeName = typeName;
     }
-
     public long getTypeID() {
         return typeID;
     }

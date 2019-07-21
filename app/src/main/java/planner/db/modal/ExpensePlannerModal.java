@@ -18,8 +18,7 @@ public class ExpensePlannerModal {
     private String monthName;
     private long yearID;
     private int yearName;
-
-
+  
     public ExpensePlannerModal(long id, long planID, int planType, String planTypeName, String description, long monthID, int month, String monthName, long yearID, int yearName) {
         this.id = id;
         this.planID = planID;
@@ -32,9 +31,6 @@ public class ExpensePlannerModal {
         this.yearID = yearID;
         this.yearName = yearName;
     }
-
-
-
 
     public long getPlanID() {
         return planID;
@@ -51,7 +47,6 @@ public class ExpensePlannerModal {
     public void setMonth(int month) {
         this.month = month;
     }
-
     public int getPlanType() {
         return planType;
     }
@@ -75,7 +70,6 @@ public class ExpensePlannerModal {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public long getMonthID() {
         return monthID;
     }
@@ -111,7 +105,6 @@ public class ExpensePlannerModal {
     public long getId() {
         return id;
     }
-
     public static void insertIntoTableInitial(SQLiteDatabase dbWriter, List<ExpensePlannerModal> expensePlannerModals) {
         for (ExpensePlannerModal expensePlannerModal : expensePlannerModals) {
             ContentValues contentValues = new ContentValues();

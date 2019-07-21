@@ -15,10 +15,6 @@ public class YearModal {
         this.id = id;
         this.year = year;
     }
-
-
-
-
     public long getId() {
         return id;
     }
@@ -40,7 +36,7 @@ public class YearModal {
         }
         db.close();
     }
-
+  
     public static YearModal returnYear(SQLiteDatabase dbReader, int year) {
         Cursor c = dbReader.rawQuery("SELECT * FROM YEARTABLE WHERE YEAR ='" + year + "'", null);
         c.moveToFirst();
@@ -60,4 +56,5 @@ public class YearModal {
         }
         return yearModals;
     }
+
 }

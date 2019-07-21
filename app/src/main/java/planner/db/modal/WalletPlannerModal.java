@@ -30,7 +30,6 @@ public class WalletPlannerModal {
     }
 
 
-
     public long getId() {
         return id;
     }
