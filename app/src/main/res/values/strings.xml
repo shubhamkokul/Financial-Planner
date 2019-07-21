@@ -35,4 +35,5 @@
     <string name="note">Note</string>
     <string name="add_income">Add Income</string>
     <string name="planned">Planned</string>
+    <string name="drop_down_item">drop_down_item</string>
 </resources>

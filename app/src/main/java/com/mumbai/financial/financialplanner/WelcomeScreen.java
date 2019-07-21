@@ -28,9 +28,9 @@ public class WelcomeScreen extends AppCompatActivity {
                     } else {
                         FinancialPlannerDataBase financialPlannerDataBase = new FinancialPlannerDataBase(getApplicationContext(), 1);
                         new PopulateInitialTables(getApplicationContext());
-                        //SharedPreferences.Editor editor = sharedpreferences.edit();
-                        //editor.putBoolean("initialtables", true);
-                        //editor.commit();
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean("initialtables", true);
+                        editor.commit();
                     }
                     sleep(SPLASH_TIME);
                 } catch (Exception e) {

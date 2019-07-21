@@ -1,9 +1,14 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class IncomePlannerModal {
     private String description;
@@ -11,9 +16,6 @@ public class IncomePlannerModal {
     private int month;
     private String monthName;
     private long yearID;
-
-
-
     private int yearName;
     private long id; //Timestamp
 
@@ -93,5 +95,18 @@ public class IncomePlannerModal {
         }
         dbWriter.close();
     }
+    public static List<IncomePlannerModal> returnAll(SQLiteDatabase dbReader){
+        List<IncomePlannerModal> incomePlannerModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE", null);
+        if(c.moveToFirst()){
+            do{
+                incomePlannerModals.add(new IncomePlannerModal(c.getLong(0), c.getString(1),
+                        c.getLong(2), c.getInt(3), c.getString(4)
+                ,c.getLong(5), c.getInt(6)));
+            } while(c.moveToNext());
+        }
+        return incomePlannerModals;
+    }
+
 
 }

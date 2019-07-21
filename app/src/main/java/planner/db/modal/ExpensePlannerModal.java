@@ -1,8 +1,10 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensePlannerModal {
@@ -126,6 +128,18 @@ public class ExpensePlannerModal {
             dbWriter.insert("EXPENSEPLANTABLE", null, contentValues);
         }
         dbWriter.close();
+    }
+
+    public static List<ExpensePlannerModal> returnAll(SQLiteDatabase dbReader){
+        List<ExpensePlannerModal> expensePlannerModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM EXPENSEPLANTABLE", null);
+        if(c.moveToFirst()){
+            do{
+                expensePlannerModals.add(new ExpensePlannerModal(c.getLong(0),c.getLong(1), c.getInt(2), c.getString(3), c.getString(4), c.getLong(5)
+                ,c.getInt(6), c.getString(7), c.getLong(8), c.getInt(9)));
+            } while(c.moveToNext());
+        }
+        return expensePlannerModals;
     }
 
 }

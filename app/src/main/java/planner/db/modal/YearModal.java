@@ -3,8 +3,7 @@ package planner.db.modal;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class YearModal {
@@ -16,6 +15,8 @@ public class YearModal {
         this.id = id;
         this.year = year;
     }
+
+
 
 
     public long getId() {
@@ -41,12 +42,22 @@ public class YearModal {
     }
 
     public static YearModal returnYear(SQLiteDatabase dbReader, int year) {
-        Log.i(TAG, year+"");
         Cursor c = dbReader.rawQuery("SELECT * FROM YEARTABLE WHERE YEAR ='" + year + "'", null);
         c.moveToFirst();
         YearModal yearModal = new YearModal(c.getLong(0), c.getInt(1));
         c.close();
         dbReader.close();
         return yearModal;
+    }
+
+    public static List<YearModal> returnAll(SQLiteDatabase dbReader) {
+        List<YearModal> yearModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM YEARTABLE", null);
+        if(c.moveToFirst()){
+            do{
+                yearModals.add(new YearModal(c.getLong(0), c.getInt(1)));
+            } while(c.moveToNext());
+        }
+        return yearModals;
     }
 }

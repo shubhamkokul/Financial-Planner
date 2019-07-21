@@ -1,14 +1,19 @@
 package com.mumbai.financial.financialplanner;
 
-import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import java.util.List;
+
+import planner.androidadapters.WalletIconAdapter;
+import planner.db.FinancialDatabaseWriter;
+import planner.db.modal.IconModal;
 
 public class WalletPlanner extends AppCompatActivity {
     private Button saveWallet;
@@ -26,13 +31,10 @@ public class WalletPlanner extends AppCompatActivity {
         iconSpinner = findViewById(R.id.iconSpinner);
         backButton = findViewById(R.id.backButton);
 
-        String[] iconSpinnerArray = {"Bank", "Cash", "Credit-Card", "Gift-Card"};
-
-        ArrayAdapter<String> iconSpinnerAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, iconSpinnerArray
-        );
-        iconSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        iconSpinner.setAdapter(iconSpinnerAdapter);
+        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        List<IconModal> iconModals = IconModal.returnAll(dbReader);
+        WalletIconAdapter walletIconAdapter = new WalletIconAdapter(getApplicationContext(), iconModals);
+        iconSpinner.setAdapter(walletIconAdapter);
 
         saveWallet.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.mumbai.financial.financialplanner;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import java.util.List;
+
+import planner.androidadapters.ExpenseIncomeMonthAdapter;
+import planner.androidadapters.ExpenseIncomeYearAdapter;
+import planner.db.FinancialDatabaseWriter;
+import planner.db.modal.MonthModal;
+import planner.db.modal.YearModal;
 
 public class IncomePlanner extends AppCompatActivity {
     private static final String TAG = "IncomePlanner";
@@ -27,21 +36,15 @@ public class IncomePlanner extends AppCompatActivity {
         saveIncome = findViewById(R.id.saveIncome);
         backButton = findViewById(R.id.backButton);
 
-        String[] monthSpinnerArray = {"January", "February", "March", "April", "May", "June", "July"
-                , "August", "September", "October", "November", "December"};
-        String[] yearSpinnerArray = {"2019", "2020", "2021", "2022", "2023", "2024"};
+        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        List<MonthModal> monthModals = MonthModal.returnAll(dbReader);
+        ExpenseIncomeMonthAdapter expenseIncomeMonthAdapter = new ExpenseIncomeMonthAdapter(getApplicationContext(), monthModals);
+        monthSpinner.setAdapter(expenseIncomeMonthAdapter);
 
-        ArrayAdapter<String> monthSpinnerAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, monthSpinnerArray
-        );
-        monthSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        monthSpinner.setAdapter(monthSpinnerAdapter);
-
-        ArrayAdapter<String> yearSpinnerAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, yearSpinnerArray
-        );
-        yearSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setAdapter(yearSpinnerAdapter);
+        dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        List<YearModal> yearModals = YearModal.returnAll(dbReader);
+        ExpenseIncomeYearAdapter expenseIncomeYearAdapter = new ExpenseIncomeYearAdapter(getApplicationContext(), yearModals);
+        yearSpinner.setAdapter(expenseIncomeYearAdapter);
 
         saveIncome.setOnClickListener(new View.OnClickListener() {
             @Override
