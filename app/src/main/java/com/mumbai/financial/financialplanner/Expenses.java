@@ -26,7 +26,7 @@ public class Expenses extends Fragment {
     private static final String TAG = "Expenses";
     private ListView expenseListView;
     private ImageView plusSignButton;
-    private List<ExpensePlannerModal> expenseIncomeModalArrayList = new ArrayList<>();
+    protected static List<ExpensePlannerModal> expenseIncomeModalArrayList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +57,14 @@ public class Expenses extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ExpenseListViewAdapter adapter = new ExpenseListViewAdapter(getActivity(), expenseIncomeModalArrayList);
+        expenseListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     public void openDetailView(int position){
         Intent intent = new Intent(getActivity(), ExpenseDetailView.class);

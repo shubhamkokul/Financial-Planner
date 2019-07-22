@@ -24,7 +24,7 @@ public class Wallet extends Fragment {
     private static final String TAG = "Expenses";
     private ListView walletListView;
     private ImageView plusSignButton;
-    private List<WalletPlannerModal> walletPlannerModals;
+    public static List<WalletPlannerModal> walletPlannerModals;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +56,14 @@ public class Wallet extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        WalletListViewAdapter adapter = new WalletListViewAdapter(getActivity(), walletPlannerModals);
+        walletListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     public void openDetailView(int position) {
