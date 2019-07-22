@@ -28,7 +28,7 @@ public class IncomePlannerModal {
         this.yearID = yearID;
         this.yearName = yearName;
     }
-
+    
 
     public long getMonthID() {
         return monthID;
@@ -77,6 +77,7 @@ public class IncomePlannerModal {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public long getId() {
         return id;
     }
@@ -95,17 +96,38 @@ public class IncomePlannerModal {
         }
         dbWriter.close();
     }
-    public static List<IncomePlannerModal> returnAll(SQLiteDatabase dbReader){
+
+    public static List<IncomePlannerModal> returnAll(SQLiteDatabase dbReader) {
         List<IncomePlannerModal> incomePlannerModals = new ArrayList<>();
         Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE", null);
-        if(c.moveToFirst()){
-            do{
+        if (c.moveToFirst()) {
+            do {
                 incomePlannerModals.add(new IncomePlannerModal(c.getLong(0), c.getString(1),
                         c.getLong(2), c.getInt(3), c.getString(4)
-                ,c.getLong(5), c.getInt(6)));
-            } while(c.moveToNext());
+                        , c.getLong(5), c.getInt(6)));
+            } while (c.moveToNext());
         }
         return incomePlannerModals;
+    }
+
+    public static int checkItem(SQLiteDatabase dbReader, long monthID, long yearID) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE WHERE MONTHID ='" + monthID + "' AND YEARID = '" + yearID + "'", null);
+        int count = c.getCount();
+        dbReader.close();
+        return count;
+    }
+
+    public static void insertIntoTable(SQLiteDatabase dbWriter, IncomePlannerModal incomePlannerModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", incomePlannerModal.getId());
+        contentValues.put("DESCRIPTION", incomePlannerModal.getDescription());
+        contentValues.put("MONTHID", incomePlannerModal.getMonthID());
+        contentValues.put("MONTH", incomePlannerModal.getMonth());
+        contentValues.put("MONTHNAME", incomePlannerModal.getMonthName());
+        contentValues.put("YEARID", incomePlannerModal.getYearID());
+        contentValues.put("YEARNAME", incomePlannerModal.getYearName());
+        dbWriter.insert("INCOMEPLANTABLE", null, contentValues);
+        dbWriter.close();
     }
 
 

@@ -36,4 +36,5 @@
     <string name="add_income">Add Income</string>
     <string name="planned">Planned</string>
     <string name="drop_down_item">drop_down_item</string>
+    <string name="plan_already_added">Plan already added</string>
 </resources>

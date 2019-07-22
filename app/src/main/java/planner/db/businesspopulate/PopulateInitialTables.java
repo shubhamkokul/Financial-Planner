@@ -364,13 +364,11 @@ public class PopulateInitialTables {
         SQLiteDatabase dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
         List<MonthModal> monthModals = MonthModal.returnAll(dbReader);
         dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
-        PlanTypeModal planTypeModal = PlanTypeModal.returnPlanType(dbReader, "Monthly");
-        dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
         YearModal yearModal = YearModal.returnYear(dbReader, Calendar.getInstance().get(Calendar.YEAR));
         int i = 0;
         while (i < 3) {
             long id = IdentifierGenerator.timeStampGenerator();
-            String description = "All my "+planTypeModal.getTypeName().toLowerCase()+" for "+monthModals.get(date.getMonth() + i).getName()+" "+yearModal.getYear();
+            String description = "All my income for "+monthModals.get(date.getMonth() + i).getName()+" "+yearModal.getYear();
             long monthID = monthModals.get(date.getMonth() + i).getId();
             int month = monthModals.get(date.getMonth() + i).getActualPosition();
             String monthName = monthModals.get(date.getMonth() + i).getName();

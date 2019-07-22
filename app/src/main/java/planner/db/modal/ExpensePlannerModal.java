@@ -34,8 +34,6 @@ public class ExpensePlannerModal {
     }
 
 
-
-
     public long getPlanID() {
         return planID;
     }
@@ -130,16 +128,40 @@ public class ExpensePlannerModal {
         dbWriter.close();
     }
 
-    public static List<ExpensePlannerModal> returnAll(SQLiteDatabase dbReader){
+    public static void insertIntoTable(SQLiteDatabase dbWriter, ExpensePlannerModal expensePlannerModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", expensePlannerModal.getId());
+        contentValues.put("PLANID", expensePlannerModal.getPlanID());
+        contentValues.put("PLANTYPE", expensePlannerModal.getPlanType());
+        contentValues.put("PLANTYPENAME", expensePlannerModal.getPlanTypeName());
+        contentValues.put("DESCRIPTION", expensePlannerModal.getDescription());
+        contentValues.put("MONTHID", expensePlannerModal.getMonthID());
+        contentValues.put("MONTH", expensePlannerModal.getMonth());
+        contentValues.put("MONTHNAME", expensePlannerModal.getMonthName());
+        contentValues.put("YEARID", expensePlannerModal.getYearID());
+        contentValues.put("YEARNAME", expensePlannerModal.getYearName());
+        dbWriter.insert("EXPENSEPLANTABLE", null, contentValues);
+        dbWriter.close();
+    }
+
+    public static List<ExpensePlannerModal> returnAll(SQLiteDatabase dbReader) {
         List<ExpensePlannerModal> expensePlannerModals = new ArrayList<>();
         Cursor c = dbReader.rawQuery("SELECT * FROM EXPENSEPLANTABLE", null);
-        if(c.moveToFirst()){
-            do{
-                expensePlannerModals.add(new ExpensePlannerModal(c.getLong(0),c.getLong(1), c.getInt(2), c.getString(3), c.getString(4), c.getLong(5)
-                ,c.getInt(6), c.getString(7), c.getLong(8), c.getInt(9)));
-            } while(c.moveToNext());
+        if (c.moveToFirst()) {
+            do {
+                expensePlannerModals.add(new ExpensePlannerModal(c.getLong(0), c.getLong(1), c.getInt(2), c.getString(3), c.getString(4), c.getLong(5)
+                        , c.getInt(6), c.getString(7), c.getLong(8), c.getInt(9)));
+            } while (c.moveToNext());
         }
+        dbReader.close();
         return expensePlannerModals;
+    }
+
+    public static int checkItem(SQLiteDatabase dbReader, long planID, long monthID, long yearID) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM EXPENSEPLANTABLE WHERE PLANID ='" + planID + "' AND MONTHID ='" + monthID + "' AND YEARID = '" + yearID + "'", null);
+        int count = c.getCount();
+        dbReader.close();
+        return count;
     }
 
 }

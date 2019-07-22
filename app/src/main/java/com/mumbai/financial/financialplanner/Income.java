@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import planner.androidadapters.IncomeListViewAdapter;
@@ -26,7 +24,7 @@ public class Income extends Fragment {
     private static final String TAG = "Income";
     private ListView incomeListView;
     private ImageView plusSignButton;
-    private List<IncomePlannerModal> incomePlannerModals = new ArrayList<>();
+    public static List<IncomePlannerModal> incomePlannerModals;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +54,14 @@ public class Income extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IncomeListViewAdapter adapter = new IncomeListViewAdapter(getActivity(), incomePlannerModals);
+        incomeListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     public void openDetailView(int position){

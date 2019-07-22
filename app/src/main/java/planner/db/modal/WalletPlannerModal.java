@@ -95,7 +95,7 @@ public class WalletPlannerModal {
         for (WalletPlannerModal walletPlannerModal : walletPlannerModals) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ID", walletPlannerModal.getId());
-            contentValues.put("NAME", walletPlannerModal.getName());
+            contentValues.put("NAME", walletPlannerModal.getName().toUpperCase());
             contentValues.put("ICONID", walletPlannerModal.getIconID());
             contentValues.put("ICON", walletPlannerModal.getIcon());
             contentValues.put("ICONNAME", walletPlannerModal.getIconName());
@@ -117,6 +117,27 @@ public class WalletPlannerModal {
             } while(c.moveToNext());
         }
         return walletPlannerModals;
+    }
+
+    public static int checkItem(SQLiteDatabase dbReader, String name, int icon) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM WALLETPLANTABLE WHERE NAME ='" + name + "' AND ICON = '" + icon + "'", null);
+        int count = c.getCount();
+        dbReader.close();
+        return count;
+    }
+
+    public static void insertIntoTable(SQLiteDatabase dbWriter, WalletPlannerModal walletPlannerModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", walletPlannerModal.getId());
+        contentValues.put("NAME", walletPlannerModal.getName().toUpperCase());
+        contentValues.put("ICONID", walletPlannerModal.getIconID());
+        contentValues.put("ICON", walletPlannerModal.getIcon());
+        contentValues.put("ICONNAME", walletPlannerModal.getIconName());
+        contentValues.put("INCOMEBALANCE", walletPlannerModal.getBalance());
+        contentValues.put("EXPENSEBALANCE", walletPlannerModal.getBalance());
+        contentValues.put("BALANCE", walletPlannerModal.getBalance());
+        dbWriter.insert("WALLETPLANTABLE", null, contentValues);
+        dbWriter.close();
     }
 
 }

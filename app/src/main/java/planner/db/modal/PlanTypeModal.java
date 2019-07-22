@@ -86,7 +86,7 @@ public class PlanTypeModal {
     }
 
     public static List<PlanTypeModal> returnAll(SQLiteDatabase dbReader) {
-        List<PlanTypeModal> planTypeModals = new ArrayList<>();
+        List<PlanTypeModal> planTypeModals  = new ArrayList<>();
         Cursor c = dbReader.rawQuery("SELECT * FROM PLANTYPETABLE", null);
         if (c.moveToFirst()){
             do {
