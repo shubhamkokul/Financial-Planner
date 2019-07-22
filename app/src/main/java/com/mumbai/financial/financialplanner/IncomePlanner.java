@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class IncomePlanner extends AppCompatActivity {
                     Income.incomePlannerModals.add(incomePlannerModal);
                     finish();
                 } else {
-                    showPopUp(getCurrentFocus());
+                    showPopUp(getCurrentFocus(), "Plan Already Added");
                 }
             }
         });
@@ -103,13 +104,15 @@ public class IncomePlanner extends AppCompatActivity {
         return incomePlannerModal;
     }
 
-    public void showPopUp(View view) {
+    public void showPopUp(View view, String message) {
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_window, null);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true;
+        TextView messageTextView = popupView.findViewById(R.id.messageTextView);
+        messageTextView.setText(message);
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 300);
         popupView.setOnTouchListener(new View.OnTouchListener() {
