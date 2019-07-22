@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
+import android.database.sqlite.SQLiteDatabase;
 
+import java.util.List;
 public class IncomePlannerModal {
     private String description;
     private long monthID;
@@ -107,9 +109,10 @@ public class IncomePlannerModal {
                         , c.getLong(5), c.getInt(6)));
             } while (c.moveToNext());
         }
+        c.close();
+        dbReader.close();
         return incomePlannerModals;
     }
-
     public static int checkItem(SQLiteDatabase dbReader, long monthID, long yearID) {
         Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE WHERE MONTHID ='" + monthID + "' AND YEARID = '" + yearID + "'", null);
         int count = c.getCount();
@@ -129,6 +132,4 @@ public class IncomePlannerModal {
         dbWriter.insert("INCOMEPLANTABLE", null, contentValues);
         dbWriter.close();
     }
-
-
 }
