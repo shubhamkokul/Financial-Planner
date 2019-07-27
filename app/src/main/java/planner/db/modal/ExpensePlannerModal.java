@@ -104,6 +104,7 @@ public class ExpensePlannerModal {
     public long getId() {
         return id;
     }
+
     public static void insertIntoTableInitial(SQLiteDatabase dbWriter, List<ExpensePlannerModal> expensePlannerModals) {
         for (ExpensePlannerModal expensePlannerModal : expensePlannerModals) {
             ContentValues contentValues = new ContentValues();

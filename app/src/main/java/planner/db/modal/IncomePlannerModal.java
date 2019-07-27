@@ -3,15 +3,11 @@ package planner.db.modal;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.util.List;
 public class IncomePlannerModal {
     private String description;
     private long monthID;
@@ -20,9 +16,11 @@ public class IncomePlannerModal {
     private long yearID;
     private int yearName;
     private long id; //Timestamp
+    private long planID;
 
-    public IncomePlannerModal(long id, String description, long monthID, int month, String monthName, long yearID, int yearName) {
+    public IncomePlannerModal(long id, long planID, String description, long monthID, int month, String monthName, long yearID, int yearName) {
         this.id = id;
+        this.planID = planID;
         this.description = description;
         this.monthID = monthID;
         this.month = month;
@@ -30,7 +28,7 @@ public class IncomePlannerModal {
         this.yearID = yearID;
         this.yearName = yearName;
     }
-    
+
 
     public long getMonthID() {
         return monthID;
@@ -84,10 +82,19 @@ public class IncomePlannerModal {
         return id;
     }
 
+    public long getPlanID() {
+        return planID;
+    }
+
+    public void setPlanID(long planID) {
+        this.planID = planID;
+    }
+
     public static void insertIntoTableInitial(SQLiteDatabase dbWriter, List<IncomePlannerModal> incomePlannerModals) {
         for (IncomePlannerModal incomePlannerModal : incomePlannerModals) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ID", incomePlannerModal.getId());
+            contentValues.put("PLANID", incomePlannerModal.getPlanID());
             contentValues.put("DESCRIPTION", incomePlannerModal.getDescription());
             contentValues.put("MONTHID", incomePlannerModal.getMonthID());
             contentValues.put("MONTH", incomePlannerModal.getMonth());
@@ -104,15 +111,16 @@ public class IncomePlannerModal {
         Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE", null);
         if (c.moveToFirst()) {
             do {
-                incomePlannerModals.add(new IncomePlannerModal(c.getLong(0), c.getString(1),
-                        c.getLong(2), c.getInt(3), c.getString(4)
-                        , c.getLong(5), c.getInt(6)));
+                incomePlannerModals.add(new IncomePlannerModal(c.getLong(0), c.getLong(1), c.getString(2),
+                        c.getLong(3), c.getInt(4), c.getString(5)
+                        , c.getLong(6), c.getInt(7)));
             } while (c.moveToNext());
         }
         c.close();
         dbReader.close();
         return incomePlannerModals;
     }
+
     public static int checkItem(SQLiteDatabase dbReader, long monthID, long yearID) {
         Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE WHERE MONTHID ='" + monthID + "' AND YEARID = '" + yearID + "'", null);
         int count = c.getCount();

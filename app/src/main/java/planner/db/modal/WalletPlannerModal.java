@@ -111,13 +111,38 @@ public class WalletPlannerModal {
     public static List<WalletPlannerModal> returnAll(SQLiteDatabase dbReader) {
         List<WalletPlannerModal> walletPlannerModals = new ArrayList<>();
         Cursor c = dbReader.rawQuery("SELECT * FROM WALLETPLANTABLE", null);
-        if(c.moveToFirst()){
-            do{
+        if (c.moveToFirst()) {
+            do {
                 walletPlannerModals.add(new WalletPlannerModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4), c.getFloat(5)
-                ,c.getFloat(6),c.getFloat(7)));
-            } while(c.moveToNext());
+                        , c.getFloat(6), c.getFloat(7)));
+            } while (c.moveToNext());
         }
         return walletPlannerModals;
+    }
+
+    public static WalletPlannerModal returnWallet(SQLiteDatabase dbReader, long id) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM WALLETPLANTABLE WHERE ID ='" + id + "'", null);
+        c.moveToFirst();
+        WalletPlannerModal walletPlannerModal = new WalletPlannerModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4), c.getFloat(5)
+                , c.getFloat(6), c.getFloat(7));
+        c.close();
+        dbReader.close();
+        return walletPlannerModal;
+    }
+
+    public static long updateWallet(SQLiteDatabase dbWriter, WalletPlannerModal walletPlannerModal) {
+        long returnValue = 0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", walletPlannerModal.getName().toUpperCase());
+        contentValues.put("ICONID", walletPlannerModal.getIconID());
+        contentValues.put("ICON", walletPlannerModal.getIcon());
+        contentValues.put("ICONNAME", walletPlannerModal.getIconName());
+        contentValues.put("INCOMEBALANCE", walletPlannerModal.getIncomeBalance());
+        contentValues.put("EXPENSEBALANCE", walletPlannerModal.getExpenseBalance());
+        contentValues.put("BALANCE", walletPlannerModal.getBalance());
+        returnValue = dbWriter.update("WALLETPLANTABLE", contentValues, "ID=" + walletPlannerModal.getId(), null);
+        dbWriter.close();
+        return returnValue;
     }
 
     public static int checkItem(SQLiteDatabase dbReader, String name, int icon) {
@@ -134,8 +159,8 @@ public class WalletPlannerModal {
         contentValues.put("ICONID", walletPlannerModal.getIconID());
         contentValues.put("ICON", walletPlannerModal.getIcon());
         contentValues.put("ICONNAME", walletPlannerModal.getIconName());
-        contentValues.put("INCOMEBALANCE", walletPlannerModal.getBalance());
-        contentValues.put("EXPENSEBALANCE", walletPlannerModal.getBalance());
+        contentValues.put("INCOMEBALANCE", walletPlannerModal.getIncomeBalance());
+        contentValues.put("EXPENSEBALANCE", walletPlannerModal.getExpenseBalance());
         contentValues.put("BALANCE", walletPlannerModal.getBalance());
         dbWriter.insert("WALLETPLANTABLE", null, contentValues);
         dbWriter.close();

@@ -1,41 +1,48 @@
 package planner.db.modal;
 
-import java.util.Date;
+
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 
 public class PlannedIncomeModal {
-    private int id;
-    private int accountId;
+    private long id;
+    private long transactionID;
+    private long accountId;
     private String accountName;
-    private int planId;
+    private long planId;
     private String planName;
-    private int categoryId;
+    private long categoryID;
     private String categoryName;
-    private Date date;
+    private String date;
     private double amount;
     private boolean planned;
 
-    public PlannedIncomeModal(int id, int accountId, String accountName, int planId, String planName, int categoryId, String categoryName, Date date, double amount, boolean planned) {
+    public PlannedIncomeModal(long id, long transactionID, long accountId, String accountName, long planId, String planName, long categoryID, String categoryName, String date, double amount, boolean planned) {
         this.id = id;
+        this.transactionID = transactionID;
         this.accountId = accountId;
         this.accountName = accountName;
         this.planId = planId;
         this.planName = planName;
-        this.categoryId = categoryId;
+        this.categoryID = categoryID;
         this.categoryName = categoryName;
         this.date = date;
         this.amount = amount;
         this.planned = planned;
     }
 
+
+
+
     public long getId() {
         return id;
     }
 
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 
@@ -47,11 +54,11 @@ public class PlannedIncomeModal {
         this.accountName = accountName;
     }
 
-    public int getPlanId() {
+    public long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(int planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 
@@ -63,12 +70,12 @@ public class PlannedIncomeModal {
         this.planName = planName;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public long getCategoryId() {
+        return categoryID;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryId(long categoryId) {
+        this.categoryID = categoryId;
     }
 
     public String getCategoryName() {
@@ -79,11 +86,11 @@ public class PlannedIncomeModal {
         this.categoryName = categoryName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -101,5 +108,41 @@ public class PlannedIncomeModal {
 
     public void setPlanned(boolean planned) {
         this.planned = planned;
+    }
+
+    public long getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(long transactionID) {
+        this.transactionID = transactionID;
+    }
+
+    public long getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(long categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public static long insertIntoTable(SQLiteDatabase dbWriter, PlannedIncomeModal plannedIncomeModal) {
+        long returnValue = 0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", plannedIncomeModal.getId());
+        contentValues.put("DATE", plannedIncomeModal.getDate());
+        contentValues.put("TRANSACTIONID", plannedIncomeModal.getTransactionID());
+        contentValues.put("PLANID", plannedIncomeModal.getPlanId());
+        contentValues.put("PLANNAME", plannedIncomeModal.getPlanName());
+        contentValues.put("ACCOUNTID", plannedIncomeModal.getAccountId());
+        contentValues.put("ACCOUNTNAME", plannedIncomeModal.getAccountName());
+        contentValues.put("AMOUNT", plannedIncomeModal.getAmount());
+        contentValues.put("CATEGORYID", plannedIncomeModal.getCategoryID());
+        contentValues.put("CATEGORYNAME", plannedIncomeModal.getCategoryName());
+        contentValues.put("PLANNED", plannedIncomeModal.isPlanned());
+        returnValue = dbWriter.insert("PLANNEDINCOMETABLE", null, contentValues);
+        dbWriter.close();
+        return returnValue;
+
     }
 }
