@@ -20,6 +20,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:src="@drawable/ic_back_arrow" />
 
@@ -174,13 +175,16 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/dateSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/custom_rectangle_spinner">
-            </Spinner>
+            <EditText
+                android:id="@+id/dateEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="@string/enter_date"
+                android:background="@drawable/custom_rectangle_edit_text"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -207,8 +211,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
-                android:autofillHints="@string/_500"
-                android:background="@drawable/custom_rectangle_edittext"
+                android:background="@drawable/custom_rectangle_edit_text"
+                android:hint="@string/_500"
                 android:inputType="numberDecimal"
                 android:textSize="17sp">
 
@@ -240,6 +244,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_toEndOf="@id/planBooleanTextView"
             android:layout_toRightOf="@id/planBooleanTextView" />
 
     </RelativeLayout>

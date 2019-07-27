@@ -1,8 +1,10 @@
 package planner.db.modal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryItemModal {
@@ -19,6 +21,9 @@ public class CategoryItemModal {
         this.type = type;
         this.typeName = typeName;
     }
+
+
+
     public long getTypeID() {
         return typeID;
     }
@@ -66,6 +71,18 @@ public class CategoryItemModal {
             db.insert("CATEGORYITEMTABLE", null, contentValues);
         }
         db.close();
+    }
+
+    public static List<CategoryItemModal> returnAll(SQLiteDatabase dbReader, int type) {
+        List<CategoryItemModal> categoryItemModals = new ArrayList<>();
+        Cursor c = dbReader.rawQuery("SELECT * FROM CATEGORYITEMTABLE WHERE TYPE = '" + type + "'", null);
+        if (c.moveToFirst()) {
+            do {
+                categoryItemModals.add(new CategoryItemModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4)));
+            } while (c.moveToNext());
+        }
+        dbReader.close();
+        return categoryItemModals;
     }
 
 }
