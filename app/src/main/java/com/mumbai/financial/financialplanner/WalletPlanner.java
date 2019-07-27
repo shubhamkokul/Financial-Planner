@@ -85,7 +85,7 @@ public class WalletPlanner extends AppCompatActivity {
                         iconModal.getId(),
                         iconModal.getIcon(),
                         iconModal.getIconName(),
-                        0.0,
+                        Double.parseDouble(balance),
                         0.0,
                         Double.parseDouble(balance)
                 );

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.mumbai.financial.financialplanner.R;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -346,7 +347,7 @@ public class PopulateInitialTables {
             long planID = planTypeModal.getId();
             int planType = planTypeModal.getType();
             String planTypeName = planTypeModal.getName();
-            String description = "All my "+planTypeModal.getTypeName().toLowerCase()+" for "+monthModals.get(date.getMonth() + i).getName()+" "+yearModal.getYear();
+            String description = "All my " + planTypeModal.getTypeName().toLowerCase() + " for " + monthModals.get(date.getMonth() + i).getName() + " " + yearModal.getYear();
             long monthID = monthModals.get(date.getMonth() + i).getId();
             int month = monthModals.get(date.getMonth() + i).getActualPosition();
             String monthName = monthModals.get(date.getMonth() + i).getName();
@@ -368,13 +369,14 @@ public class PopulateInitialTables {
         int i = 0;
         while (i < 3) {
             long id = IdentifierGenerator.timeStampGenerator();
-            String description = "All my income for "+monthModals.get(date.getMonth() + i).getName()+" "+yearModal.getYear();
+            long planID = 999999999;
+            String description = "All my income for " + monthModals.get(date.getMonth() + i).getName() + " " + yearModal.getYear();
             long monthID = monthModals.get(date.getMonth() + i).getId();
             int month = monthModals.get(date.getMonth() + i).getActualPosition();
             String monthName = monthModals.get(date.getMonth() + i).getName();
             long yearID = yearModal.getId();
             int yearName = yearModal.getYear();
-            incomePlannerModals.add(new IncomePlannerModal(id, description, monthID, month, monthName, yearID, yearName));
+            incomePlannerModals.add(new IncomePlannerModal(id, 999999999, description, monthID, month, monthName, yearID, yearName));
             i++;
         }
         SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();

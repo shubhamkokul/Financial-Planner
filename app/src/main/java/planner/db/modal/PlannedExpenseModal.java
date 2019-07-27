@@ -1,41 +1,48 @@
 package planner.db.modal;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.Date;
 
 public class PlannedExpenseModal {
     private long id;
-    private int accountId;
+    private long transactionID;
+    private long accountId;
     private String accountName;
-    private int planId;
+    private long planId;
     private String planName;
-    private int categoryId;
+    private long categoryID;
     private String categoryName;
-    private Date date;
+    private String date;
     private double amount;
     private boolean planned;
 
-    public PlannedExpenseModal(long id, int accountId, String accountName, int planId, String planName, int categoryId, String categoryName, Date date, double amount, boolean planned) {
+    public PlannedExpenseModal(long id, long transactionID, long accountId, String accountName, long planId, String planName, long categoryID, String categoryName, String date, double amount, boolean planned) {
         this.id = id;
+        this.transactionID = transactionID;
         this.accountId = accountId;
         this.accountName = accountName;
         this.planId = planId;
         this.planName = planName;
-        this.categoryId = categoryId;
+        this.categoryID = categoryID;
         this.categoryName = categoryName;
         this.date = date;
         this.amount = amount;
         this.planned = planned;
     }
 
+
+
     public long getId() {
         return id;
     }
 
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 
@@ -47,11 +54,11 @@ public class PlannedExpenseModal {
         this.accountName = accountName;
     }
 
-    public int getPlanId() {
+    public long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(int planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 
@@ -63,12 +70,12 @@ public class PlannedExpenseModal {
         this.planName = planName;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public long getCategoryId() {
+        return categoryID;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryId(long categoryId) {
+        this.categoryID = categoryId;
     }
 
     public String getCategoryName() {
@@ -79,11 +86,11 @@ public class PlannedExpenseModal {
         this.categoryName = categoryName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -101,6 +108,41 @@ public class PlannedExpenseModal {
 
     public void setPlanned(boolean planned) {
         this.planned = planned;
+    }
+
+    public long getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(long transactionID) {
+        this.transactionID = transactionID;
+    }
+
+    public long getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(long categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public static long insertIntoTable(SQLiteDatabase dbWriter, PlannedExpenseModal plannedExpenseModal) {
+        long returnValue = 0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", plannedExpenseModal.getId());
+        contentValues.put("DATE", plannedExpenseModal.getDate());
+        contentValues.put("TRANSACTIONID", plannedExpenseModal.getTransactionID());
+        contentValues.put("PLANID", plannedExpenseModal.getPlanId());
+        contentValues.put("PLANNAME", plannedExpenseModal.getPlanName());
+        contentValues.put("ACCOUNTID", plannedExpenseModal.getAccountId());
+        contentValues.put("ACCOUNTNAME", plannedExpenseModal.getAccountName());
+        contentValues.put("AMOUNT", plannedExpenseModal.getAmount());
+        contentValues.put("CATEGORYID", plannedExpenseModal.getCategoryID());
+        contentValues.put("CATEGORYNAME", plannedExpenseModal.getCategoryName());
+        contentValues.put("PLANNED", plannedExpenseModal.isPlanned());
+        returnValue = dbWriter.insert("PLANNEDEXPENSETABLE", null, contentValues);
+        dbWriter.close();
+        return returnValue;
     }
 
 }

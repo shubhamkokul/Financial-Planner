@@ -92,6 +92,7 @@ public class IncomePlanner extends AppCompatActivity {
             }
             incomePlannerModal = new IncomePlannerModal(
                     IdentifierGenerator.timeStampGenerator(),
+                    999999999,
                     description,
                     monthModal.getId(),
                     monthModal.getActualPosition(),

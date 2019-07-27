@@ -20,26 +20,25 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import planner.androidadapters.CategoryListViewListAdapter;
 import planner.androidadapters.ExpenseListViewListAdapter;
 import planner.androidadapters.WalletListViewListAdapter;
 import planner.db.FinancialDatabaseWriter;
+import planner.db.businesspopulate.AmountCalculation;
+import planner.db.modal.ActualExpenseModal;
 import planner.db.modal.CategoryItemModal;
 import planner.db.modal.ExpensePlannerModal;
+import planner.db.modal.PlannedExpenseModal;
 import planner.db.modal.TransactionModal;
 import planner.db.modal.WalletPlannerModal;
 import planner.utility.IdentifierGenerator;
 
 public class AddExpense extends AppCompatActivity {
     private static final String TAG = "AddExpense";
-    private ImageView backButton;
     private Spinner accountTypeSpinner, planTypeSpinner, categoryTypeSpinner;
     private EditText amountEditText, dateEditText;
-    DatePickerDialog datePickerDialog;
-    private Button addExpensePlanButton, saveExpense;
     private Switch planSwitch;
     protected static List<WalletPlannerModal> walletPlannerModals;
     protected static List<ExpensePlannerModal> expensePlannerModals;
@@ -77,7 +76,7 @@ public class AddExpense extends AppCompatActivity {
             }
         });
 
-        addExpensePlanButton = findViewById(R.id.addExpensePlanButton);
+        Button addExpensePlanButton = findViewById(R.id.addExpensePlanButton);
         addExpensePlanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,20 +87,25 @@ public class AddExpense extends AppCompatActivity {
 
         amountEditText = findViewById(R.id.amountEditText);
         planSwitch = findViewById(R.id.planSwitch);
-        saveExpense = findViewById(R.id.saveExpense);
+        Button saveExpense = findViewById(R.id.saveExpense);
         saveExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onExpenseSave()>0){
-                    showPopUp(getCurrentFocus(), "Saved");
-                    finish();
+                TransactionModal transactionModal = onExpenseSave();
+                if (transactionModal == null) {
+
                 } else {
-                    showPopUp(getCurrentFocus(), "Error while Saving");
+                    if (saveExpenseMain(transactionModal) > 0) {
+                        showPopUp(getCurrentFocus(), "Saved");
+                    } else {
+                        showPopUp(getCurrentFocus(), "Error while Saving");
+                    }
                 }
+
             }
         });
 
-        backButton = findViewById(R.id.backButton);
+        ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +130,7 @@ public class AddExpense extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
-        datePickerDialog = new DatePickerDialog(AddExpense.this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddExpense.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -137,10 +141,11 @@ public class AddExpense extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    public long onExpenseSave() {
-        long returnValue = 0;
-        if (amountEditText.getText().toString().isEmpty()) {
-            showPopUp(getCurrentFocus(), "Please Enter the amount");
+    public TransactionModal onExpenseSave() {
+        TransactionModal returnValue = null;
+        if (amountEditText.getText().toString().isEmpty() || dateEditText.getText().toString().isEmpty()) {
+            showPopUp(getCurrentFocus(), "Please Enter all fields");
+            return null;
         } else {
             long id = IdentifierGenerator.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
@@ -171,8 +176,52 @@ public class AddExpense extends AppCompatActivity {
             SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
             returnValue = TransactionModal.insertIntoTable(dbWriter, transactionModal);
         }
-            return returnValue;
+        return returnValue;
+    }
 
+    public long saveExpenseMain(TransactionModal transactionModal) {
+        long returnValue = 0;
+        if (transactionModal == null) {
+            return 0;
+        } else {
+            if (transactionModal.isPlanned()) {
+                PlannedExpenseModal plannedExpenseModal = new PlannedExpenseModal(
+                        IdentifierGenerator.timeStampGenerator(),
+                        transactionModal.getId(),
+                        transactionModal.getAccountId(),
+                        transactionModal.getAccountName(),
+                        transactionModal.getPlanId(),
+                        transactionModal.getPlanName(),
+                        transactionModal.getCategoryID(),
+                        transactionModal.getCategoryName(),
+                        transactionModal.getDate(),
+                        transactionModal.getCurrentAmount(),
+                        transactionModal.isPlanned()
+                );
+                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                returnValue = PlannedExpenseModal.insertIntoTable(dbWriter, plannedExpenseModal);
+            } else {
+                ActualExpenseModal actualExpenseModal = new ActualExpenseModal(
+                        IdentifierGenerator.timeStampGenerator(),
+                        transactionModal.getId(),
+                        transactionModal.getAccountId(),
+                        transactionModal.getAccountName(),
+                        transactionModal.getPlanId(),
+                        transactionModal.getPlanName(),
+                        transactionModal.getCategoryID(),
+                        transactionModal.getCategoryName(),
+                        transactionModal.getDate(),
+                        transactionModal.getCurrentAmount(),
+                        transactionModal.isPlanned()
+                );
+                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                ActualExpenseModal.insertIntoTable(dbWriter, actualExpenseModal);
+                SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+                WalletPlannerModal walletPlannerModal = WalletPlannerModal.returnWallet(dbReader, transactionModal.getAccountId());
+                returnValue = AmountCalculation.expenseCalculation(getApplicationContext(), actualExpenseModal, walletPlannerModal);
+            }
+        }
+        return returnValue;
     }
 
     public void showPopUp(View view, String message) {
@@ -194,4 +243,5 @@ public class AddExpense extends AppCompatActivity {
             }
         });
     }
+
 }

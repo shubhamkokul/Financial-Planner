@@ -167,7 +167,7 @@ public class TransactionModal {
         this.transactionID = transactionID;
     }
 
-    public static long insertIntoTable(SQLiteDatabase dbWriter, TransactionModal transactionModal) {
+    public static TransactionModal insertIntoTable(SQLiteDatabase dbWriter, TransactionModal transactionModal) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("ID", transactionModal.getId());
         contentValues.put("DATE", transactionModal.getDate());
@@ -184,8 +184,8 @@ public class TransactionModal {
         contentValues.put("TRANSACTIONTYPE", transactionModal.getTransactionType());
         contentValues.put("TRANSACTIONNAME", transactionModal.getTransactionName());
         contentValues.put("PLANNED", transactionModal.isPlanned());
-        long returnValue = dbWriter.insert("TRANSACTIONTABLE", null, contentValues);
+        dbWriter.insert("TRANSACTIONTABLE", null, contentValues);
         dbWriter.close();
-        return returnValue;
+        return transactionModal;
     }
 }
