@@ -36,7 +36,6 @@ import planner.db.modal.WalletPlannerModal;
 import planner.utility.IdentifierGenerator;
 
 public class AddExpense extends AppCompatActivity {
-    private static final String TAG = "AddExpense";
     private Spinner accountTypeSpinner, planTypeSpinner, categoryTypeSpinner;
     private EditText amountEditText, dateEditText;
     private Switch planSwitch;
@@ -92,9 +91,7 @@ public class AddExpense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TransactionModal transactionModal = onExpenseSave();
-                if (transactionModal == null) {
-
-                } else {
+                if (transactionModal != null) {
                     if (saveExpenseMain(transactionModal) > 0) {
                         showPopUp(getCurrentFocus(), "Saved");
                     } else {
@@ -142,14 +139,13 @@ public class AddExpense extends AppCompatActivity {
     }
 
     public TransactionModal onExpenseSave() {
-        TransactionModal returnValue = null;
+        TransactionModal returnValue;
         if (amountEditText.getText().toString().isEmpty() || dateEditText.getText().toString().isEmpty()) {
             showPopUp(getCurrentFocus(), "Please Enter all fields");
             return null;
         } else {
             long id = IdentifierGenerator.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
-            long timeStamp = id;
             ExpensePlannerModal expensePlannerModal = expensePlannerModals.get(planTypeSpinner.getSelectedItemPosition());
             WalletPlannerModal walletPlannerModal = walletPlannerModals.get(accountTypeSpinner.getSelectedItemPosition());
             double currentAmount = Double.parseDouble(amountEditText.getText().toString().trim());
@@ -158,7 +154,7 @@ public class AddExpense extends AppCompatActivity {
             TransactionModal transactionModal = new TransactionModal(
                     id,
                     date,
-                    timeStamp,
+                    id,
                     expensePlannerModal.getPlanID(),
                     expensePlannerModal.getMonthName() + " " + expensePlannerModal.getYearName(),
                     walletPlannerModal.getId(),
@@ -180,7 +176,7 @@ public class AddExpense extends AppCompatActivity {
     }
 
     public long saveExpenseMain(TransactionModal transactionModal) {
-        long returnValue = 0;
+        long returnValue;
         if (transactionModal == null) {
             return 0;
         } else {

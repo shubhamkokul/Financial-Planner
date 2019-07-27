@@ -1,6 +1,7 @@
 package com.mumbai.financial.financialplanner;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,8 +49,7 @@ public class AddIncome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
 
-        amountEditText = findViewById(R.id.amountEditText);
-        planSwitch = findViewById(R.id.planSwitch);
+
 
 
         accountTypeSpinner = findViewById(R.id.accountTypeSpinner);
@@ -85,9 +85,7 @@ public class AddIncome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TransactionModal transactionModal = onIncomeSave();
-                if (transactionModal == null) {
-
-                } else {
+                if (transactionModal!= null) {
                     if (saveIncomeMain(transactionModal) > 0) {
                         showPopUp(getCurrentFocus(), "Saved");
                     } else {
@@ -97,7 +95,14 @@ public class AddIncome extends AppCompatActivity {
 
             }
         });
-
+        Button addIncomePlanButton = findViewById(R.id.addIncomePlanButton);
+        addIncomePlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddIncome.this, IncomePlanner.class);
+                startActivity(intent);
+            }
+        });
 
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +140,7 @@ public class AddIncome extends AppCompatActivity {
     }
 
     private long saveIncomeMain(TransactionModal transactionModal) {
-        long returnValue = 0;
+        long returnValue;
         if (transactionModal == null) {
             return 0;
         } else {
@@ -180,14 +185,13 @@ public class AddIncome extends AppCompatActivity {
     }
 
     public TransactionModal onIncomeSave() {
-        TransactionModal returnValue = null;
+        TransactionModal returnValue;
         if (amountEditText.getText().toString().isEmpty() || dateEditText.getText().toString().isEmpty()) {
             showPopUp(getCurrentFocus(), "Please Enter all fields");
             return null;
         } else {
             long id = IdentifierGenerator.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
-            long timeStamp = id;
             IncomePlannerModal incomePlannerModal = incomePlannerModals.get(planTypeSpinner.getSelectedItemPosition());
             WalletPlannerModal walletPlannerModal = walletPlannerModals.get(accountTypeSpinner.getSelectedItemPosition());
             double currentAmount = Double.parseDouble(amountEditText.getText().toString().trim());
@@ -196,7 +200,7 @@ public class AddIncome extends AppCompatActivity {
             TransactionModal transactionModal = new TransactionModal(
                     id,
                     date,
-                    timeStamp,
+                    id,
                     incomePlannerModal.getPlanID(),
                     incomePlannerModal.getMonthName() + " " + incomePlannerModal.getYearName(),
                     walletPlannerModal.getId(),
@@ -223,10 +227,9 @@ public class AddIncome extends AppCompatActivity {
         View popupView = inflater.inflate(R.layout.popup_window, null);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true;
         TextView messageTextView = popupView.findViewById(R.id.messageTextView);
         messageTextView.setText(message);
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 300);
         popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
