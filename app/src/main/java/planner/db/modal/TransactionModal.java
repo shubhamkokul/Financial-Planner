@@ -1,24 +1,27 @@
 package planner.db.modal;
 
-import java.util.Date;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 
 public class TransactionModal {
     private long id;
-    private Date date;
-    private int timeStamp;
-    private int planId;
+    private String date;
+    private long timeStamp;
+    private long planId;
     private String planName;
-    private int accountId;
+    private long accountId;
     private String accountName;
     private double previousAmount;
     private double currentAmount;
+    private long categoryID;
     private int categoryType;
     private String categoryName;
+    private long transactionID;
     private int transactionType;
     private String transactionName;
     private boolean planned;
 
-    public TransactionModal(long id, Date date, int timeStamp, int planId, String planName, int accountId, String accountName, double previousAmount, double currentAmount, int categoryType, String categoryName, int transactionType, String transactionName, boolean planned) {
+    public TransactionModal(long id, String date, long timeStamp, long planId, String planName, long accountId, String accountName, double previousAmount, double currentAmount, long categoryID, int categoryType, String categoryName, long transactionID, int transactionType, String transactionName, boolean planned) {
         this.id = id;
         this.date = date;
         this.timeStamp = timeStamp;
@@ -28,39 +31,43 @@ public class TransactionModal {
         this.accountName = accountName;
         this.previousAmount = previousAmount;
         this.currentAmount = currentAmount;
+        this.categoryID = categoryID;
         this.categoryType = categoryType;
         this.categoryName = categoryName;
+        this.transactionID = transactionID;
         this.transactionType = transactionType;
         this.transactionName = transactionName;
         this.planned = planned;
     }
+
+
 
     public long getId() {
         return id;
     }
 
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public int getTimeStamp() {
+    public long getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(int timeStamp) {
+    public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }
 
-    public int getPlanId() {
+    public long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(int planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 
@@ -72,11 +79,11 @@ public class TransactionModal {
         this.planName = planName;
     }
 
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 
@@ -136,11 +143,49 @@ public class TransactionModal {
         this.transactionName = transactionName;
     }
 
+    public long getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(long categoryID) {
+        this.categoryID = categoryID;
+    }
+
     public boolean isPlanned() {
         return planned;
     }
 
     public void setPlanned(boolean planned) {
         this.planned = planned;
+    }
+
+    public long getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(long transactionID) {
+        this.transactionID = transactionID;
+    }
+
+    public static long insertIntoTable(SQLiteDatabase dbWriter, TransactionModal transactionModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", transactionModal.getId());
+        contentValues.put("DATE", transactionModal.getDate());
+        contentValues.put("TIMESTAMP", transactionModal.getTimeStamp());
+        contentValues.put("PLANID", transactionModal.getPlanId());
+        contentValues.put("PLANNAME", transactionModal.getPlanName());
+        contentValues.put("ACCOUNTID", transactionModal.getAccountId());
+        contentValues.put("ACCOUNTNAME", transactionModal.getAccountName());
+        contentValues.put("PREVIOUSAMOUNT", transactionModal.getPreviousAmount());
+        contentValues.put("CURRENTAMOUNT", transactionModal.getCurrentAmount());
+        contentValues.put("CATEGORYID", transactionModal.getCategoryID());
+        contentValues.put("CATEGORYTYPE", transactionModal.getCategoryType());
+        contentValues.put("CATEGORYNAME", transactionModal.getCategoryName());
+        contentValues.put("TRANSACTIONTYPE", transactionModal.getTransactionType());
+        contentValues.put("TRANSACTIONNAME", transactionModal.getTransactionName());
+        contentValues.put("PLANNED", transactionModal.isPlanned());
+        long returnValue = dbWriter.insert("TRANSACTIONTABLE", null, contentValues);
+        dbWriter.close();
+        return returnValue;
     }
 }

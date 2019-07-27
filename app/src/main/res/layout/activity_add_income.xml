@@ -208,7 +208,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:inputType="numberDecimal"
-                android:background="@drawable/custom_rectangle_edittext"
+                android:background="@drawable/custom_rectangle_edit_text"
                 android:textSize="17sp">
 
             </EditText>

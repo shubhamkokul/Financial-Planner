@@ -94,7 +94,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/custom_rectangle_edittext" />
+            android:background="@drawable/custom_rectangle_edit_text" />
     </LinearLayout>
 
     <LinearLayout

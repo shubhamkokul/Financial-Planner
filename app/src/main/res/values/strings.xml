@@ -37,4 +37,6 @@
     <string name="planned">Planned</string>
     <string name="drop_down_item">drop_down_item</string>
     <string name="plan_already_added">Plan already added</string>
+    <string name="set_the_date">Set the Date</string>
+    <string name="enter_date">Enter Date</string>
 </resources>
