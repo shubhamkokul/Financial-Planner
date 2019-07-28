@@ -26,7 +26,7 @@ import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.IncomePlannerModal;
 import planner.db.modal.MonthModal;
 import planner.db.modal.YearModal;
-import planner.utility.IdentifierGenerator;
+import planner.utility.Utility;
 
 public class IncomePlanner extends AppCompatActivity {
     private static final String TAG = "IncomePlanner";
@@ -91,7 +91,7 @@ public class IncomePlanner extends AppCompatActivity {
                 description = "All my income for " + monthModal.getName() + " " + yearModal.getYear();
             }
             incomePlannerModal = new IncomePlannerModal(
-                    IdentifierGenerator.timeStampGenerator(),
+                    Utility.timeStampGenerator(),
                     999999999,
                     description,
                     monthModal.getId(),

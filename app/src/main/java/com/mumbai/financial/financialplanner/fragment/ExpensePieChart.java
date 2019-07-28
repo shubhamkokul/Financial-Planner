@@ -29,13 +29,12 @@ import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.ActualExpenseModal;
 import planner.db.modal.ExpensePlannerModal;
 import planner.db.modal.PlannedExpenseModal;
-import planner.utility.IdentifierGenerator;
-import planner.utility.MyValueFormatter;
+import planner.utility.Utility;
 
 public class ExpensePieChart extends Fragment {
     ExpensePlannerModal expensePlannerModal;
     ImageView backImage, toggleImage, addExpense;
-    private TextView transactionTextViewTitle;
+    private TextView transactionTextViewTitle, transactionType, totalAmount;
     private boolean transactionViewBoolean = true;
     private List<ActualExpenseModal> actualExpenseModals;
     private List<PlannedExpenseModal> plannedExpenseModals;
@@ -50,60 +49,53 @@ public class ExpensePieChart extends Fragment {
         View view = inflater.inflate(R.layout.fragment_expense_pie_chart, container, false);
         this.expensePlannerModal = (ExpensePlannerModal) getArguments().getSerializable("expensePlannerModal");
         transactionTextViewTitle = view.findViewById(R.id.transactionTextViewTitle);
+        transactionType = view.findViewById(R.id.transactionType);
+        totalAmount = view.findViewById(R.id.totalAmount);
         backImage = view.findViewById(R.id.backImage);
         toggleImage = view.findViewById(R.id.toggleImage);
         addExpense = view.findViewById(R.id.addExpense);
         expensePieChart = view.findViewById(R.id.expensePieChart);
         toggleTransaction();
-        toggleImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleTransaction();
-            }
+        toggleImage.setOnClickListener(v -> toggleTransaction());
+        addExpense.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddExpense.class);
+            startActivity(intent);
         });
-        addExpense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddExpense.class);
-                startActivity(intent);
-            }
-        });
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        backImage.setOnClickListener(v -> getActivity().onBackPressed());
         return view;
     }
 
     public void toggleTransaction() {
+        String displayText = expensePlannerModal.getMonthName()+ " " + expensePlannerModal.getYearName();
+        transactionTextViewTitle.setText(displayText);
         if (transactionViewBoolean) {
-            transactionTextViewTitle.setText("Actual Expense Pie Chart");
+            transactionType.setText("Actual Expense");
             SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
             actualExpenseModals = ActualExpenseModal.returnMonthTransaction(dbReader, expensePlannerModal.getId());
-            HashMap<String, Double> pieMerge = IdentifierGenerator.mergeCategoriesActualExpense(actualExpenseModals);
-            List<Integer> mergeColor = IdentifierGenerator.mergeColorActualExpense(actualExpenseModals);
-            contructPie(pieMerge, mergeColor);
+            HashMap<String, String> pieMerge = Utility.mergeCategoriesActualExpense(actualExpenseModals);
+            List<Integer> mergeColor = Utility.mergeColorActualExpense(actualExpenseModals);
+            generatePie(pieMerge, mergeColor);
             transactionViewBoolean = false;
         } else {
-            transactionTextViewTitle.setText("Planned Expense Pie Chart");
+            transactionType.setText("Planned Expense");
             SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
             plannedExpenseModals = PlannedExpenseModal.returnMonthTransaction(dbReader, expensePlannerModal.getId());
-            HashMap<String, Double> pieMerge = IdentifierGenerator.mergeCategoriesPlannedExpense(plannedExpenseModals);
-            List<Integer> mergeColor = IdentifierGenerator.mergeColorPlannedExpense(plannedExpenseModals);
-            contructPie(pieMerge, mergeColor);
+            HashMap<String, String> pieMerge = Utility.mergeCategoriesPlannedExpense(plannedExpenseModals);
+            List<Integer> mergeColor = Utility.mergeColorPlannedExpense(plannedExpenseModals);
+            generatePie(pieMerge, mergeColor);
             transactionViewBoolean = true;
         }
     }
-    public void contructPie(HashMap<String, Double> pieMerge, List<Integer> mergeColor) {
+    public void generatePie(HashMap<String, String> pieMerge, List<Integer> mergeColor) {
         List<PieEntry> entries = new ArrayList<>();
         float sum = 0;
-        for (Map.Entry<String, Double> pie : pieMerge.entrySet()) {
-            sum = sum + Float.parseFloat(pie.getValue() + "");
+        for (Map.Entry<String, String> pie : pieMerge.entrySet()) {
+            sum = sum + Float.parseFloat(pie.getValue());
         }
-        for (Map.Entry<String, Double> pie : pieMerge.entrySet()) {
-            float percent = Float.parseFloat(pie.getValue() + "") * 100 / sum;
+        String displayText = sum+"";
+        totalAmount.setText(displayText);
+        for (Map.Entry<String, String> pie : pieMerge.entrySet()) {
+            float percent = Float.parseFloat(pie.getValue()) * 100 / sum;
             entries.add(new PieEntry(percent, pie.getKey()));
         }
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -122,6 +114,11 @@ public class ExpensePieChart extends Fragment {
         expensePieChart.setDrawHoleEnabled(true);
         expensePieChart.animateXY(1000, 1000);
         expensePieChart.getLegend().setEnabled(true);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        toggleTransaction();
     }
 
 

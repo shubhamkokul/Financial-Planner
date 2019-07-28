@@ -16,7 +16,7 @@
             android:id="@+id/backImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:clickable="true"
             android:contentDescription="@string/back_button"
             android:focusable="true"
@@ -28,44 +28,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@+id/backButton"
             android:padding="8dp"
             android:text="@string/actual_transaction"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/addToggleLinear"
+        <ImageView
+            android:id="@+id/toggleImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:clickable="true"
             android:layout_toRightOf="@+id/transactionTextViewTitle"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:contentDescription="@string/toggle_planned_actual"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_toggle_image" />
 
-            <ImageView
-                android:id="@+id/toggleImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:contentDescription="@string/toggle_planned_actual"
-                android:focusable="true"
-                android:padding="8dp"
-                android:src="@drawable/ic_toggle_image" />
-
-            <ImageView
-                android:id="@+id/addExpense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:contentDescription="@string/add_expense"
-                android:focusable="true"
-                android:padding="8dp"
-                android:src="@drawable/ic_plus_sign" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/addExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/add_expense"
+            android:focusable="true"
+            android:padding="8dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_plus_sign" />
     </RelativeLayout>
 
     <RelativeLayout

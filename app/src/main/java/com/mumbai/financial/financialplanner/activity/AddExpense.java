@@ -35,7 +35,7 @@ import planner.db.modal.ExpensePlannerModal;
 import planner.db.modal.PlannedExpenseModal;
 import planner.db.modal.TransactionModal;
 import planner.db.modal.WalletPlannerModal;
-import planner.utility.IdentifierGenerator;
+import planner.utility.Utility;
 
 public class AddExpense extends AppCompatActivity {
     private Spinner accountTypeSpinner, planTypeSpinner, categoryTypeSpinner;
@@ -146,7 +146,7 @@ public class AddExpense extends AppCompatActivity {
             showPopUp(getCurrentFocus(), "Please Enter all fields");
             return null;
         } else {
-            long id = IdentifierGenerator.timeStampGenerator();
+            long id = Utility.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
             ExpensePlannerModal expensePlannerModal = expensePlannerModals.get(planTypeSpinner.getSelectedItemPosition());
             WalletPlannerModal walletPlannerModal = walletPlannerModals.get(accountTypeSpinner.getSelectedItemPosition());
@@ -189,7 +189,7 @@ public class AddExpense extends AppCompatActivity {
         } else {
             if (transactionModal.isPlanned()) {
                 PlannedExpenseModal plannedExpenseModal = new PlannedExpenseModal(
-                        IdentifierGenerator.timeStampGenerator(),
+                        Utility.timeStampGenerator(),
                         transactionModal.getId(),
                         transactionModal.getAccountId(),
                         transactionModal.getAccountName(),
@@ -208,7 +208,7 @@ public class AddExpense extends AppCompatActivity {
                 returnValue = PlannedExpenseModal.insertIntoTable(dbWriter, plannedExpenseModal);
             } else {
                 ActualExpenseModal actualExpenseModal = new ActualExpenseModal(
-                        IdentifierGenerator.timeStampGenerator(),
+                        Utility.timeStampGenerator(),
                         transactionModal.getId(),
                         transactionModal.getAccountId(),
                         transactionModal.getAccountName(),
