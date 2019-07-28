@@ -1,4 +1,4 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.fragment;
 
 
 import android.content.Intent;
@@ -12,11 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.activity.WalletPlanner;
+import com.mumbai.financial.financialplanner.activity.ExpenseDetailView;
+
 import java.util.List;
 
 import planner.androidadapters.WalletListViewAdapter;
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.WalletPlannerModal;
 
 public class Wallet extends Fragment {
@@ -31,7 +34,7 @@ public class Wallet extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
 
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getActivity(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
         walletPlannerModals = WalletPlannerModal.returnAll(dbReader);
 
         walletListView = view.findViewById(R.id.walletListView);

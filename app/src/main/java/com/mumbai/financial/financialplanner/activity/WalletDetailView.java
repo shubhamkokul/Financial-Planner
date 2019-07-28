@@ -1,17 +1,18 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class ExpenseDetailView extends AppCompatActivity {
+import com.mumbai.financial.financialplanner.R;
 
-    TextView position;
+public class WalletDetailView extends AppCompatActivity {
+    private TextView position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expense_detail_view);
+        setContentView(R.layout.activity_wallet_detail_view);
         Bundle intent = getIntent().getExtras();
         int i = intent.getInt("position");
         position = findViewById(R.id.position);

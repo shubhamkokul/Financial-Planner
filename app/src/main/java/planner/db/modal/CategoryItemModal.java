@@ -13,15 +13,16 @@ public class CategoryItemModal {
     private long typeID;
     private int type;
     private String typeName;
-  
-    public CategoryItemModal(long id, String name, long typeID, int type, String typeName) {
+    private int color;
+
+    public CategoryItemModal(long id, String name, long typeID, int type, String typeName, int color) {
         this.id = id;
         this.name = name;
         this.typeID = typeID;
         this.type = type;
         this.typeName = typeName;
+        this.color = color;
     }
-
 
 
     public long getTypeID() {
@@ -60,14 +61,23 @@ public class CategoryItemModal {
         this.typeName = typeName;
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
     public static void insertIntoTable(SQLiteDatabase db, List<CategoryItemModal> categoryItemModals) {
-        for(CategoryItemModal categoryItemModal : categoryItemModals){
+        for (CategoryItemModal categoryItemModal : categoryItemModals) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ID", categoryItemModal.getId());
             contentValues.put("NAME", categoryItemModal.getName());
             contentValues.put("TYPEID", categoryItemModal.getTypeID());
             contentValues.put("TYPE", categoryItemModal.getType());
             contentValues.put("TYPENAME", categoryItemModal.getTypeName());
+            contentValues.put("CATEGORYCOLOR", categoryItemModal.getColor());
             db.insert("CATEGORYITEMTABLE", null, contentValues);
         }
         db.close();
@@ -78,7 +88,7 @@ public class CategoryItemModal {
         Cursor c = dbReader.rawQuery("SELECT * FROM CATEGORYITEMTABLE WHERE TYPE = '" + type + "'", null);
         if (c.moveToFirst()) {
             do {
-                categoryItemModals.add(new CategoryItemModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4)));
+                categoryItemModals.add(new CategoryItemModal(c.getLong(0), c.getString(1), c.getLong(2), c.getInt(3), c.getString(4), c.getInt(5)));
             } while (c.moveToNext());
         }
         dbReader.close();

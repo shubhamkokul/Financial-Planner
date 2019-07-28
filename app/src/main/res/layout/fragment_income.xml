@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Expenses"
+    tools:context=".fragment.Expenses"
     android:orientation="horizontal">
 
 
     <RelativeLayout
-        android:id="@+id/toolbalRelative"
+        android:id="@+id/toolbarRelative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/_light_green">
@@ -37,7 +37,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbalRelative">
+        android:layout_below="@+id/toolbarRelative">
 
         <ListView
             android:id="@+id/incomeListView"

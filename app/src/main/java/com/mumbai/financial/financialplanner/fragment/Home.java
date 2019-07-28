@@ -1,4 +1,4 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.fragment;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,6 +19,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.activity.AddExpense;
+import com.mumbai.financial.financialplanner.activity.AddIncome;
 
 import java.util.ArrayList;
 import java.util.List;

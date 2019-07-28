@@ -4,11 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class FinancialDatabaseWriter extends SQLiteOpenHelper {
+public class FinancialDatabaseOperation extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "financialDB.db";
 
-    public FinancialDatabaseWriter(Context context, int version) {
+    public FinancialDatabaseOperation(Context context, int version) {
         super(context, DATABASE_NAME, null, version);
     }
 

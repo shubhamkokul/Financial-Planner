@@ -9,21 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeScreen">
+        <activity android:name=".activity.WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WalletDetailView" />
-        <activity android:name=".IncomeDetailView" />
-        <activity android:name=".ExpenseDetailView" />
-        <activity android:name=".AddIncome" />
-        <activity android:name=".AddExpense" />
-        <activity android:name=".WalletPlanner" />
-        <activity android:name=".IncomePlanner" />
-        <activity android:name=".ExpensePlanner" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.WalletDetailView" />
+        <activity android:name=".activity.IncomeDetailView" />
+        <activity android:name=".activity.ExpenseDetailView" />
+        <activity android:name=".activity.AddIncome" />
+        <activity android:name=".activity.AddExpense" />
+        <activity android:name=".activity.WalletPlanner" />
+        <activity android:name=".activity.IncomePlanner" />
+        <activity android:name=".activity.ExpensePlanner" />
+        <activity android:name=".activity.MainActivity">
         </activity>
     </application>
 

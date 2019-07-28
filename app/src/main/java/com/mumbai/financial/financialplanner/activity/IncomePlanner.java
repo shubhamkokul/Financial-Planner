@@ -1,6 +1,5 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,14 +15,16 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.fragment.Income;
+
 import java.util.List;
 
 import planner.androidadapters.ExpenseIncomeMonthAdapter;
 import planner.androidadapters.ExpenseIncomeYearAdapter;
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.IncomePlannerModal;
 import planner.db.modal.MonthModal;
-import planner.db.modal.PlanTypeModal;
 import planner.db.modal.YearModal;
 import planner.utility.IdentifierGenerator;
 
@@ -47,12 +47,12 @@ public class IncomePlanner extends AppCompatActivity {
         saveIncome = findViewById(R.id.saveIncome);
         backButton = findViewById(R.id.backButton);
 
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         monthModals = MonthModal.returnAll(dbReader);
         ExpenseIncomeMonthAdapter expenseIncomeMonthAdapter = new ExpenseIncomeMonthAdapter(getApplicationContext(), monthModals);
         monthSpinner.setAdapter(expenseIncomeMonthAdapter);
 
-        dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         yearModals = YearModal.returnAll(dbReader);
         ExpenseIncomeYearAdapter expenseIncomeYearAdapter = new ExpenseIncomeYearAdapter(getApplicationContext(), yearModals);
         yearSpinner.setAdapter(expenseIncomeYearAdapter);
@@ -83,7 +83,7 @@ public class IncomePlanner extends AppCompatActivity {
         String description = descriptionEditText.getText().toString().trim();
         MonthModal monthModal = monthModals.get(monthSpinner.getSelectedItemPosition());
         YearModal yearModal = yearModals.get(yearSpinner.getSelectedItemPosition());
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         if (IncomePlannerModal.checkItem(dbReader, monthModal.getId(), yearModal.getId()) > 0) {
             incomePlannerModal = null;
         } else {
@@ -99,7 +99,7 @@ public class IncomePlanner extends AppCompatActivity {
                     monthModal.getName(),
                     yearModal.getId(),
                     yearModal.getYear());
-            SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+            SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
             IncomePlannerModal.insertIntoTable(dbWriter, incomePlannerModal);
         }
         return incomePlannerModal;

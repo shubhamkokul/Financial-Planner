@@ -20,8 +20,12 @@ public class TransactionModal {
     private int transactionType;
     private String transactionName;
     private boolean planned;
+    private int categoryColor;
+    private String day;
+    private String month;
 
-    public TransactionModal(long id, String date, long timeStamp, long planId, String planName, long accountId, String accountName, double previousAmount, double currentAmount, long categoryID, int categoryType, String categoryName, long transactionID, int transactionType, String transactionName, boolean planned) {
+    public TransactionModal(long id, String date, long timeStamp, long planId, String planName, long accountId, String accountName, double previousAmount, double currentAmount, long categoryID,
+                            int categoryType, String categoryName, long transactionID, int transactionType, String transactionName, boolean planned, int categoryColor, String day, String month) {
         this.id = id;
         this.date = date;
         this.timeStamp = timeStamp;
@@ -38,8 +42,10 @@ public class TransactionModal {
         this.transactionType = transactionType;
         this.transactionName = transactionName;
         this.planned = planned;
+        this.categoryColor = categoryColor;
+        this.day = day;
+        this.month = month;
     }
-
 
 
     public long getId() {
@@ -167,6 +173,30 @@ public class TransactionModal {
         this.transactionID = transactionID;
     }
 
+    public int getCategoryColor() {
+        return categoryColor;
+    }
+
+    public void setCategoryColor(int categoryColor) {
+        this.categoryColor = categoryColor;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
     public static TransactionModal insertIntoTable(SQLiteDatabase dbWriter, TransactionModal transactionModal) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("ID", transactionModal.getId());
@@ -184,6 +214,9 @@ public class TransactionModal {
         contentValues.put("TRANSACTIONTYPE", transactionModal.getTransactionType());
         contentValues.put("TRANSACTIONNAME", transactionModal.getTransactionName());
         contentValues.put("PLANNED", transactionModal.isPlanned());
+        contentValues.put("CATEGORYCOLOR", transactionModal.getCategoryColor());
+        contentValues.put("DAY", transactionModal.getDay());
+        contentValues.put("MONTH", transactionModal.getMonth());
         dbWriter.insert("TRANSACTIONTABLE", null, contentValues);
         dbWriter.close();
         return transactionModal;
