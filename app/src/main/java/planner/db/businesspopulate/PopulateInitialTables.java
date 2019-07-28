@@ -314,15 +314,15 @@ public class PopulateInitialTables {
         String iconName = "Bank";
         iconModals.add(new IconModal(id, icon, iconName));
         id = Utility.timeStampGenerator();
-        icon = R.drawable.ic_bank_icon;
+        icon = R.drawable.ic_cash_icon;
         iconName = "Cash";
         iconModals.add(new IconModal(id, icon, iconName));
         id = Utility.timeStampGenerator();
-        icon = R.drawable.ic_bank_icon;
+        icon = R.drawable.ic_credit_icon;
         iconName = "Credit Card";
         iconModals.add(new IconModal(id, icon, iconName));
         id = Utility.timeStampGenerator();
-        icon = R.drawable.ic_bank_icon;
+        icon = R.drawable.ic_gift_icon;
         iconName = "Gift Card";
         iconModals.add(new IconModal(id, icon, iconName));
         IconModal.insertIntoTable(dbWriter, iconModals);
