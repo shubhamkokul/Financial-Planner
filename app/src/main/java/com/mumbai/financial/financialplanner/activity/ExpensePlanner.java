@@ -28,7 +28,7 @@ import planner.db.modal.ExpensePlannerModal;
 import planner.db.modal.MonthModal;
 import planner.db.modal.PlanTypeModal;
 import planner.db.modal.YearModal;
-import planner.utility.IdentifierGenerator;
+import planner.utility.Utility;
 
 public class ExpensePlanner extends AppCompatActivity {
 
@@ -104,7 +104,7 @@ public class ExpensePlanner extends AppCompatActivity {
                     description = "All my "+planTypeModal.getTypeName().toLowerCase()+" for "+monthModal.getName()+" "+yearModal.getYear();
                 }
                 expensePlannerModal = new ExpensePlannerModal(
-                        IdentifierGenerator.timeStampGenerator(),
+                        Utility.timeStampGenerator(),
                         planTypeModal.getId(),
                         planTypeModal.getType(),
                         planTypeModal.getName(),

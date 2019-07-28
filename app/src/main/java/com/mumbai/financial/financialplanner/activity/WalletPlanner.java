@@ -24,7 +24,7 @@ import planner.androidadapters.WalletIconAdapter;
 import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.IconModal;
 import planner.db.modal.WalletPlannerModal;
-import planner.utility.IdentifierGenerator;
+import planner.utility.Utility;
 
 public class WalletPlanner extends AppCompatActivity {
     private Button saveWallet;
@@ -83,7 +83,7 @@ public class WalletPlanner extends AppCompatActivity {
                 showPopUp(getCurrentFocus(), "Enter Account Name");
             } else {
                 walletPlannerModal = new WalletPlannerModal(
-                        IdentifierGenerator.timeStampGenerator(),
+                        Utility.timeStampGenerator(),
                         name.toUpperCase(),
                         iconModal.getId(),
                         iconModal.getIcon(),

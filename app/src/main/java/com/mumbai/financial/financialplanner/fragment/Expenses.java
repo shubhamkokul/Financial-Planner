@@ -43,20 +43,12 @@ public class Expenses extends Fragment {
 
         plusSignButton = view.findViewById(R.id.plusSignButton);
 
-        plusSignButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ExpensePlanner.class);
-                startActivity(intent);
-            }
+        plusSignButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ExpensePlanner.class);
+            startActivity(intent);
         });
 
-        expenseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openDetailView(position);
-            }
-        });
+        expenseListView.setOnItemClickListener((parent, view1, position, id) -> openDetailView(position));
 
 
         return view;

@@ -9,21 +9,21 @@ import java.util.Random;
 import planner.db.modal.ActualExpenseModal;
 import planner.db.modal.PlannedExpenseModal;
 
-public class IdentifierGenerator {
+public class Utility {
 
     public static long timeStampGenerator(){
         return new Timestamp(System.currentTimeMillis()).getTime() + new Random().nextInt();
     }
-    public static HashMap<String, Double> mergeCategoriesActualExpense(List<ActualExpenseModal> actualExpenseModals) {
-        HashMap<String, Double> pieMerge = new HashMap<>();
+    public static HashMap<String, String> mergeCategoriesActualExpense(List<ActualExpenseModal> actualExpenseModals) {
+        HashMap<String, String> pieMerge = new HashMap<>();
         for (ActualExpenseModal actualExpenseModal : actualExpenseModals) {
             if (pieMerge.containsKey(actualExpenseModal.getCategoryName())) {
                 double amount = actualExpenseModal.getAmount();
-                double amountValue = pieMerge.get(actualExpenseModal.getCategoryName());
+                double amountValue = Double.parseDouble(pieMerge.get(actualExpenseModal.getCategoryName()));
                 double newAmount = amount + amountValue;
-                pieMerge.replace(actualExpenseModal.getCategoryName(), newAmount);
+                pieMerge.replace(actualExpenseModal.getCategoryName(), newAmount+"");
             } else {
-                pieMerge.put(actualExpenseModal.getCategoryName(), actualExpenseModal.getAmount());
+                pieMerge.put(actualExpenseModal.getCategoryName(), actualExpenseModal.getAmount()+"");
             }
         }
         return pieMerge;
@@ -41,16 +41,16 @@ public class IdentifierGenerator {
         return mergeColor;
     }
 
-    public static HashMap<String, Double> mergeCategoriesPlannedExpense(List<PlannedExpenseModal> plannedExpenseModals) {
-        HashMap<String, Double> pieMerge = new HashMap<>();
+    public static HashMap<String, String> mergeCategoriesPlannedExpense(List<PlannedExpenseModal> plannedExpenseModals) {
+        HashMap<String, String> pieMerge = new HashMap<>();
         for (PlannedExpenseModal plannedExpenseModal : plannedExpenseModals) {
             if (pieMerge.containsKey(plannedExpenseModal.getCategoryName())) {
                 double amount = plannedExpenseModal.getAmount();
-                double amountValue = pieMerge.get(plannedExpenseModal.getCategoryName());
+                double amountValue = Double.parseDouble(pieMerge.get(plannedExpenseModal.getCategoryName()));
                 double newAmount = amount + amountValue;
-                pieMerge.replace(plannedExpenseModal.getCategoryName(), newAmount);
+                pieMerge.replace(plannedExpenseModal.getCategoryName(), newAmount+"");
             } else {
-                pieMerge.put(plannedExpenseModal.getCategoryName(), plannedExpenseModal.getAmount());
+                pieMerge.put(plannedExpenseModal.getCategoryName(), plannedExpenseModal.getAmount()+"");
             }
         }
         return pieMerge;

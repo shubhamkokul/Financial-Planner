@@ -35,7 +35,7 @@ import planner.db.modal.IncomePlannerModal;
 import planner.db.modal.PlannedIncomeModal;
 import planner.db.modal.TransactionModal;
 import planner.db.modal.WalletPlannerModal;
-import planner.utility.IdentifierGenerator;
+import planner.utility.Utility;
 
 public class AddIncome extends AppCompatActivity {
 
@@ -148,7 +148,7 @@ public class AddIncome extends AppCompatActivity {
         } else {
             if (transactionModal.isPlanned()) {
                 PlannedIncomeModal plannedIncomeModal = new PlannedIncomeModal(
-                        IdentifierGenerator.timeStampGenerator(),
+                        Utility.timeStampGenerator(),
                         transactionModal.getId(),
                         transactionModal.getAccountId(),
                         transactionModal.getAccountName(),
@@ -167,7 +167,7 @@ public class AddIncome extends AppCompatActivity {
                 returnValue = PlannedIncomeModal.insertIntoTable(dbWriter, plannedIncomeModal);
             } else {
                 ActualIncomeModal actualIncomeModal = new ActualIncomeModal(
-                        IdentifierGenerator.timeStampGenerator(),
+                        Utility.timeStampGenerator(),
                         transactionModal.getId(),
                         transactionModal.getAccountId(),
                         transactionModal.getAccountName(),
@@ -198,7 +198,7 @@ public class AddIncome extends AppCompatActivity {
             showPopUp(getCurrentFocus(), "Please Enter all fields");
             return null;
         } else {
-            long id = IdentifierGenerator.timeStampGenerator();
+            long id = Utility.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
             IncomePlannerModal incomePlannerModal = incomePlannerModals.get(planTypeSpinner.getSelectedItemPosition());
             WalletPlannerModal walletPlannerModal = walletPlannerModals.get(accountTypeSpinner.getSelectedItemPosition());

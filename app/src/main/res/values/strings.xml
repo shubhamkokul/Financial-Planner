@@ -44,4 +44,12 @@
     <string name="actual_transaction">Actual Transaction</string>
     <string name="back_button">Back Button</string>
     <string name="mon">MON</string>
+    <string name="expense_planned">Expense Planned</string>
+    <string name="actual_expense_over_planned_limit">Actual Expense (Over Planned Limit)</string>
+    <string name="actual_expense_under_planned_limit">Actual Expense (Under Planned Limit)</string>
+    <string name="sum_actual_expenses">Sum Actual Expenses</string>
+    <string name="sum_planned_expenses">Sum Planned Expenses</string>
+    <string name="difference">Difference:</string>
+    <string name="deviation">Deviation:</string>
+    <string name="_0_0">0.0</string>
 </resources>
