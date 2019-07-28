@@ -11,7 +11,7 @@
         android:id="@+id/toolbarRelative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/_light_green">
+        android:background="@color/steel_blue">
 
         <TextView
             android:layout_width="match_parent"

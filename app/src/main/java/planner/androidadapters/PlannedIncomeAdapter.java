@@ -10,21 +10,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mumbai.financial.financialplanner.R;
+
 import java.util.List;
 
-import planner.db.modal.ActualExpenseModal;
+import planner.db.modal.PlannedIncomeModal;
 
-public class ActualExpenseAdapter extends ArrayAdapter<ActualExpenseModal> {
-    private static final String TAG = "ActualExpenseAdapter";
+public class PlannedIncomeAdapter  extends ArrayAdapter<PlannedIncomeModal> {
+    private static final String TAG = "PlannedIncomeAdapter";
     private final LayoutInflater mInflater;
     private TextView dayWord, month3Word, description, amount;
-    private List<ActualExpenseModal> actualExpenseModals;
+    private List<PlannedIncomeModal> plannedIncomeModals;
     private LinearLayout monthAndDay;
 
-    public ActualExpenseAdapter(FragmentActivity context, List<ActualExpenseModal> actualExpenseModals) {
-        super(context, R.layout.custom_transaction_list_item, actualExpenseModals);
+    public PlannedIncomeAdapter(FragmentActivity context, List<PlannedIncomeModal> plannedIncomeModals) {
+        super(context, R.layout.custom_transaction_list_item, plannedIncomeModals);
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.actualExpenseModals = actualExpenseModals;
+        this.plannedIncomeModals = plannedIncomeModals;
     }
 
 
@@ -41,13 +42,13 @@ public class ActualExpenseAdapter extends ArrayAdapter<ActualExpenseModal> {
         month3Word = view.findViewById(R.id.month3Word);
         amount = view.findViewById(R.id.amount);
         description = view.findViewById(R.id.description);
-        monthAndDay.setBackgroundColor(getContext().getResources().getColor(actualExpenseModals.get(position).getCategoryColor()));
-        dayWord.setText(actualExpenseModals.get(position).getDay());
-        month3Word.setText(actualExpenseModals.get(position).getMonth().substring(0, 3));
-        String displayText = "-" + actualExpenseModals.get(position).getAmount();
+        monthAndDay.setBackgroundColor(getContext().getResources().getColor(plannedIncomeModals.get(position).getCategoryColor()));
+        dayWord.setText(plannedIncomeModals.get(position).getDay());
+        month3Word.setText(plannedIncomeModals.get(position).getMonth().substring(0, 3));
+        String displayText = "" + plannedIncomeModals.get(position).getAmount();
         amount.setText(displayText);
-        amount.setTextColor(getContext().getResources().getColor(R.color.red));
-        description.setText(actualExpenseModals.get(position).getCategoryName());
+        amount.setTextColor(getContext().getResources().getColor(R.color.green));
+        description.setText(plannedIncomeModals.get(position).getCategoryName());
         return view;
     }
 }

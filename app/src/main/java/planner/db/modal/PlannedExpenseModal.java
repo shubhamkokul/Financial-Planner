@@ -181,7 +181,7 @@ public class PlannedExpenseModal {
 
     public static List<PlannedExpenseModal> returnMonthTransaction(SQLiteDatabase dbReader, long planID) {
         List<PlannedExpenseModal> plannedExpenseModals = new ArrayList<>();
-        Cursor c = dbReader.rawQuery("SELECT * FROM ACTUALEXPENSETABLE WHERE PLANID = '" + planID + "'", null);
+        Cursor c = dbReader.rawQuery("SELECT * FROM PLANNEDEXPENSETABLE WHERE PLANID = '" + planID + "'", null);
         if (c.moveToFirst()) {
             do {
                 plannedExpenseModals.add(new PlannedExpenseModal(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3), c.getLong(4),

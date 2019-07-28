@@ -12,9 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.mumbai.financial.financialplanner.activity.IncomeDetailView;
 import com.mumbai.financial.financialplanner.activity.IncomePlanner;
 import com.mumbai.financial.financialplanner.R;
-import com.mumbai.financial.financialplanner.activity.ExpenseDetailView;
 
 import java.util.List;
 
@@ -69,8 +69,9 @@ public class Income extends Fragment {
     }
 
     public void openDetailView(int position){
-        Intent intent = new Intent(getActivity(), ExpenseDetailView.class);
-        intent.putExtra("position", position);
+        Intent intent = new Intent(getActivity(), IncomeDetailView.class);
+        IncomePlannerModal incomePlannerModal = incomePlannerModals.get(position);
+        intent.putExtra("incomePlannerModal", incomePlannerModal);
         startActivity(intent);
     }
 

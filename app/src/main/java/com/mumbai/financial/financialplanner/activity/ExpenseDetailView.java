@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mumbai.financial.financialplanner.R;
-import com.mumbai.financial.financialplanner.fragment.ExpenseActualTransaction;
+import com.mumbai.financial.financialplanner.fragment.ExpensePieChart;
+import com.mumbai.financial.financialplanner.fragment.ExpenseTransaction;
 
 import planner.androidadapters.DetailSectionPageAdapter;
 import planner.db.modal.ExpensePlannerModal;
@@ -33,9 +34,15 @@ public class ExpenseDetailView extends AppCompatActivity {
         DetailSectionPageAdapter adapter = new DetailSectionPageAdapter(getSupportFragmentManager());
         Bundle args = new Bundle();
         args.putSerializable("expensePlannerModal", expensePlannerModal);
-        ExpenseActualTransaction expenseActualTransaction = new ExpenseActualTransaction();
-        expenseActualTransaction.setArguments(args);
-        adapter.addFragment(expenseActualTransaction, "Transaction");
+        ExpenseTransaction expenseTransaction = new ExpenseTransaction();
+        expenseTransaction.setArguments(args);
+        adapter.addFragment(expenseTransaction, "Transaction");
+        ExpensePieChart expensePieChart = new ExpensePieChart();
+        expensePieChart.setArguments(args);
+        adapter.addFragment(expensePieChart, "Pie Chart");
+        /*ExpenseComparision expenseComparision = new ExpenseComparision();
+        expenseComparision.setArguments(args);
+        adapter.addFragment(expenseComparision, "Pie Chart");*/
         viewPager.setAdapter(adapter);
     }
 
