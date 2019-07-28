@@ -32,6 +32,8 @@ public class ExpensePlannerModal implements Serializable {
         this.yearID = yearID;
         this.yearName = yearName;
     }
+
+
     public long getPlanID() {
         return planID;
     }
@@ -158,6 +160,14 @@ public class ExpensePlannerModal implements Serializable {
         int count = c.getCount();
         dbReader.close();
         return count;
+    }
+
+    public static ExpensePlannerModal returnMonthTransaction(SQLiteDatabase dbReader, int month, int year) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM EXPENSEPLANTABLE WHERE MONTH ='" + month + "' AND YEARNAME = '" + year + "'", null);
+        c.moveToFirst();
+        ExpensePlannerModal expensePlannerModal = new ExpensePlannerModal(c.getLong(0), c.getLong(1), c.getInt(2), c.getString(3), c.getString(4), c.getLong(5)
+                , c.getInt(6), c.getString(7), c.getLong(8), c.getInt(9));
+        return expensePlannerModal;
     }
 
 }

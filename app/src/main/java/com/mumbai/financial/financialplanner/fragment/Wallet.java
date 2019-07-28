@@ -43,20 +43,12 @@ public class Wallet extends Fragment {
 
         plusSignButton = view.findViewById(R.id.plusSignButton);
 
-        plusSignButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WalletPlanner.class);
-                startActivity(intent);
-            }
+        plusSignButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WalletPlanner.class);
+            startActivity(intent);
         });
 
-        walletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openDetailView(position);
-            }
-        });
+        /*walletListView.setOnItemClickListener((parent, view1, position, id) -> openDetailView(position));*/
 
         return view;
     }

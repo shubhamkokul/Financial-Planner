@@ -14,48 +14,49 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.mumbai.financial.financialplanner.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import planner.db.modal.ExpenseComparisionModal;
+import planner.db.modal.IncomeComparisionModal;
 import planner.utility.MyValueFormatter;
 
-public class ExpenseComparisionAdapter extends ArrayAdapter<ExpenseComparisionModal> {
-    private static final String TAG = "ExpenseComparisionAdapter";
+public class IncomeComparisionAdapter extends ArrayAdapter<IncomeComparisionModal> {
+    private static final String TAG = "IncomeComparisionAdapter";
     private final LayoutInflater mInflater;
     private HorizontalBarChart horizontalBarChart;
-    private List<ExpenseComparisionModal> expenseComparisionModals;
+    private List<IncomeComparisionModal> incomeComparisionModals;
 
-    public ExpenseComparisionAdapter(Context context, List<ExpenseComparisionModal> expenseComparisionModals) {
-        super(context, R.layout.comparision_expense_row_item, expenseComparisionModals);
+    public IncomeComparisionAdapter(Context context, List<IncomeComparisionModal> incomeComparisionModals) {
+        super(context, R.layout.comparision_income_row_item, incomeComparisionModals);
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.expenseComparisionModals = expenseComparisionModals;
+        this.incomeComparisionModals = incomeComparisionModals;
 
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         if (convertView == null) {
-            view = mInflater.inflate(R.layout.comparision_expense_row_item, parent, false);
+            view = mInflater.inflate(R.layout.comparision_income_row_item, parent, false);
         } else {
             view = convertView;
         }
         horizontalBarChart = view.findViewById(R.id.horizontalBarChart);
-        showOverviewGraph(horizontalBarChart, expenseComparisionModals.get(position).getActualValue(), expenseComparisionModals.get(position).getPlannedValue(), expenseComparisionModals.get(position).getCategoryName());
+        showOverviewGraph(horizontalBarChart, incomeComparisionModals.get(position).getActualValue(), incomeComparisionModals.get(position).getPlannedValue(), incomeComparisionModals.get(position).getCategoryName());
         return view;
     }
-    private void showOverviewGraph(HorizontalBarChart horizontalBarChartCurrent, String actual, String planned, String categoryName) {
+    private void showOverviewGraph(HorizontalBarChart horizontalBarChartCurrent, String planned, String actual, String categoryName) {
         float maxValue = 0;
         List<BarEntry> plannedEntried = new ArrayList<>();
-        plannedEntried.add(new BarEntry(1f, Float.parseFloat(planned)));
+        plannedEntried.add(new BarEntry(1f, Float.parseFloat(planned), planned));
         BarDataSet plannedDataSet = new BarDataSet(plannedEntried, "Planned");
         plannedDataSet.setValueFormatter(new MyValueFormatter());
         int color = ContextCompat.getColor(getContext(), R.color.blue);
         plannedDataSet.setColor(color);
 
         List<BarEntry> actualEntries = new ArrayList<>();
-        actualEntries.add(new BarEntry(0, Float.parseFloat(actual)));
+        actualEntries.add(new BarEntry(0, Float.parseFloat(actual), actual));
         BarDataSet actualDataSet = new BarDataSet(actualEntries, "Actual");
         actualDataSet.setValueFormatter(new MyValueFormatter());
         if(Float.parseFloat(actual)>Float.parseFloat(planned)){
@@ -72,6 +73,7 @@ public class ExpenseComparisionAdapter extends ArrayAdapter<ExpenseComparisionMo
         horizontalBarChartCurrent.getAxisLeft().setStartAtZero(true);
         horizontalBarChartCurrent.getAxisRight().setStartAtZero(false);
         horizontalBarChartCurrent.getXAxis().setDrawGridLines(false);
+
         YAxis rightYAxis = horizontalBarChartCurrent.getAxisRight();
         YAxis leftYAxis = horizontalBarChartCurrent.getAxisLeft();
         XAxis XAxis = horizontalBarChartCurrent.getXAxis();

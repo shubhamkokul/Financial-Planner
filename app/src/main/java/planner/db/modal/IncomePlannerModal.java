@@ -31,6 +31,8 @@ public class IncomePlannerModal implements Serializable {
     }
 
 
+
+
     public long getMonthID() {
         return monthID;
     }
@@ -140,5 +142,14 @@ public class IncomePlannerModal implements Serializable {
         contentValues.put("YEARNAME", incomePlannerModal.getYearName());
         dbWriter.insert("INCOMEPLANTABLE", null, contentValues);
         dbWriter.close();
+    }
+
+    public static IncomePlannerModal returnMonthTransaction(SQLiteDatabase dbReader, int month, int year) {
+        Cursor c = dbReader.rawQuery("SELECT * FROM INCOMEPLANTABLE WHERE MONTH ='" + month + "' AND YEARNAME = '" + year + "'", null);
+        c.moveToFirst();
+        IncomePlannerModal incomePlannerModal = new IncomePlannerModal(c.getLong(0), c.getLong(1), c.getString(2),
+                c.getLong(3), c.getInt(4), c.getString(5)
+                , c.getLong(6), c.getInt(7));
+        return incomePlannerModal;
     }
 }
