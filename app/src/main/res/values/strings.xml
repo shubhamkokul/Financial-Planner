@@ -47,8 +47,13 @@
     <string name="expense_planned">Expense Planned</string>
     <string name="actual_expense_over_planned_limit">Actual Expense (Over Planned Limit)</string>
     <string name="actual_expense_under_planned_limit">Actual Expense (Under Planned Limit)</string>
+    <string name="income_planned">Income Planned</string>
+    <string name="actual_income_over_planned_limit">Actual Income (Over Planned Limit)</string>
+    <string name="actual_income_under_planned_limit">Actual Income (Under Planned Limit)</string>
     <string name="sum_actual_expenses">Sum Actual Expenses</string>
     <string name="sum_planned_expenses">Sum Planned Expenses</string>
+    <string name="sum_actual_income">Sum Actual Income</string>
+    <string name="sum_planned_income">Sum Planned Income</string>
     <string name="difference">Difference:</string>
     <string name="deviation">Deviation:</string>
     <string name="_0_0">0.0</string>
