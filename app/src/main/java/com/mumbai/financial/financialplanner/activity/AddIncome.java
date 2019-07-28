@@ -1,6 +1,7 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,13 +19,15 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.mumbai.financial.financialplanner.R;
+
 import java.util.Calendar;
 import java.util.List;
 
 import planner.androidadapters.CategoryListViewListAdapter;
 import planner.androidadapters.IncomeListViewListAdapter;
 import planner.androidadapters.WalletListViewListAdapter;
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.businesspopulate.AmountCalculation;
 import planner.db.modal.ActualIncomeModal;
 import planner.db.modal.CategoryItemModal;
@@ -48,24 +51,23 @@ public class AddIncome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
 
-        amountEditText = findViewById(R.id.amountEditText);
-        planSwitch = findViewById(R.id.planSwitch);
+
 
 
         accountTypeSpinner = findViewById(R.id.accountTypeSpinner);
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         walletPlannerModals = WalletPlannerModal.returnAll(dbReader);
         WalletListViewListAdapter walletAdapter = new WalletListViewListAdapter(getApplicationContext(), walletPlannerModals);
         accountTypeSpinner.setAdapter(walletAdapter);
 
         planTypeSpinner = findViewById(R.id.planTypeSpinner);
-        dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         incomePlannerModals = IncomePlannerModal.returnAll(dbReader);
         IncomeListViewListAdapter incomeAdapter = new IncomeListViewListAdapter(getApplicationContext(), incomePlannerModals);
         planTypeSpinner.setAdapter(incomeAdapter);
 
         categoryTypeSpinner = findViewById(R.id.categoryTypeSpinner);
-        dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         categoryItemModals = CategoryItemModal.returnAll(dbReader, 1);
         CategoryListViewListAdapter categoryAdapter = new CategoryListViewListAdapter(getApplicationContext(), categoryItemModals);
         categoryTypeSpinner.setAdapter(categoryAdapter);
@@ -85,9 +87,7 @@ public class AddIncome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TransactionModal transactionModal = onIncomeSave();
-                if (transactionModal == null) {
-
-                } else {
+                if (transactionModal!= null) {
                     if (saveIncomeMain(transactionModal) > 0) {
                         showPopUp(getCurrentFocus(), "Saved");
                     } else {
@@ -97,7 +97,14 @@ public class AddIncome extends AppCompatActivity {
 
             }
         });
-
+        Button addIncomePlanButton = findViewById(R.id.addIncomePlanButton);
+        addIncomePlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddIncome.this, IncomePlanner.class);
+                startActivity(intent);
+            }
+        });
 
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +118,7 @@ public class AddIncome extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         incomePlannerModals = IncomePlannerModal.returnAll(dbReader);
         IncomeListViewListAdapter incomeAdapter = new IncomeListViewListAdapter(getApplicationContext(), incomePlannerModals);
         planTypeSpinner.setAdapter(incomeAdapter);
@@ -135,7 +142,7 @@ public class AddIncome extends AppCompatActivity {
     }
 
     private long saveIncomeMain(TransactionModal transactionModal) {
-        long returnValue = 0;
+        long returnValue;
         if (transactionModal == null) {
             return 0;
         } else {
@@ -151,9 +158,12 @@ public class AddIncome extends AppCompatActivity {
                         transactionModal.getCategoryName(),
                         transactionModal.getDate(),
                         transactionModal.getCurrentAmount(),
-                        transactionModal.isPlanned()
+                        transactionModal.isPlanned(),
+                        transactionModal.getCategoryColor(),
+                        transactionModal.getDay(),
+                        transactionModal.getMonth()
                 );
-                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
                 returnValue = PlannedIncomeModal.insertIntoTable(dbWriter, plannedIncomeModal);
             } else {
                 ActualIncomeModal actualIncomeModal = new ActualIncomeModal(
@@ -167,11 +177,14 @@ public class AddIncome extends AppCompatActivity {
                         transactionModal.getCategoryName(),
                         transactionModal.getDate(),
                         transactionModal.getCurrentAmount(),
-                        transactionModal.isPlanned()
+                        transactionModal.isPlanned(),
+                        transactionModal.getCategoryColor(),
+                        transactionModal.getDay(),
+                        transactionModal.getMonth()
                 );
-                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
                 ActualIncomeModal.insertIntoTable(dbWriter, actualIncomeModal);
-                SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+                SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
                 WalletPlannerModal walletPlannerModal = WalletPlannerModal.returnWallet(dbReader, transactionModal.getAccountId());
                 returnValue = AmountCalculation.incomeCalculation(getApplicationContext(), actualIncomeModal, walletPlannerModal);
             }
@@ -180,24 +193,24 @@ public class AddIncome extends AppCompatActivity {
     }
 
     public TransactionModal onIncomeSave() {
-        TransactionModal returnValue = null;
+        TransactionModal returnValue;
         if (amountEditText.getText().toString().isEmpty() || dateEditText.getText().toString().isEmpty()) {
             showPopUp(getCurrentFocus(), "Please Enter all fields");
             return null;
         } else {
             long id = IdentifierGenerator.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
-            long timeStamp = id;
             IncomePlannerModal incomePlannerModal = incomePlannerModals.get(planTypeSpinner.getSelectedItemPosition());
             WalletPlannerModal walletPlannerModal = walletPlannerModals.get(accountTypeSpinner.getSelectedItemPosition());
             double currentAmount = Double.parseDouble(amountEditText.getText().toString().trim());
             CategoryItemModal categoryItemModal = categoryItemModals.get(categoryTypeSpinner.getSelectedItemPosition());
             boolean planned = planSwitch.isChecked();
+            String dateTemp[] = date.split("-");
             TransactionModal transactionModal = new TransactionModal(
                     id,
                     date,
-                    timeStamp,
-                    incomePlannerModal.getPlanID(),
+                    id,
+                    incomePlannerModal.getId(),
                     incomePlannerModal.getMonthName() + " " + incomePlannerModal.getYearName(),
                     walletPlannerModal.getId(),
                     walletPlannerModal.getName(),
@@ -209,9 +222,13 @@ public class AddIncome extends AppCompatActivity {
                     categoryItemModal.getTypeID(),
                     categoryItemModal.getType(),
                     categoryItemModal.getTypeName(),
-                    planned
+                    planned,
+                    categoryItemModal.getColor(),
+                    dateTemp[1],
+                    incomePlannerModal.getMonthName()
+
             );
-            SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+            SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
             returnValue = TransactionModal.insertIntoTable(dbWriter, transactionModal);
         }
         return returnValue;
@@ -223,10 +240,9 @@ public class AddIncome extends AppCompatActivity {
         View popupView = inflater.inflate(R.layout.popup_window, null);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true;
         TextView messageTextView = popupView.findViewById(R.id.messageTextView);
         messageTextView.setText(message);
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 300);
         popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override

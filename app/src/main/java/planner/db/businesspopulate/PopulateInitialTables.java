@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.CategoryItemModal;
 import planner.db.modal.ExpensePlannerModal;
 import planner.db.modal.IconModal;
@@ -41,7 +41,7 @@ public class PopulateInitialTables {
     }
 
     public void populateTransactionTypeTable() {
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         List<TransactionTypeModal> transactionTypeModals = new ArrayList<>();
         long timestamp = IdentifierGenerator.timeStampGenerator();
         int type = 0;
@@ -56,7 +56,7 @@ public class PopulateInitialTables {
     }
 
     public void populateMonthTable() {
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         List<MonthModal> monthModals = new ArrayList<>();
         long timestamp = IdentifierGenerator.timeStampGenerator();
         int actualPosition = 1;
@@ -110,7 +110,7 @@ public class PopulateInitialTables {
     }
 
     public void populateYearTable() {
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         List<YearModal> yearModals = new ArrayList<>();
         long timestamp = IdentifierGenerator.timeStampGenerator();
         int year = 2019;
@@ -138,137 +138,157 @@ public class PopulateInitialTables {
 
     public void populateCategoryItemTable() {
         List<CategoryItemModal> categoryItemModals = new ArrayList<>();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         TransactionTypeModal transactionTypeModal = TransactionTypeModal.returnType(dbReader, "EXPENSE");
         long id = IdentifierGenerator.timeStampGenerator();
         String name = "Accommodation";
+        int color = R.color.dark_cyan;
         long typeID = transactionTypeModal.getId();
         int type = transactionTypeModal.getType();
         String typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Bills";
+        color = R.color.dark_goldenrod;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Car";
+        color = R.color.fire_brick;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Credit Card";
+        color = R.color.sienna;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Entertainment";
+        color = R.color.light_sky_blue;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Miscellaneous";
+        color = R.color.olive_drab;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Fees";
+        color = R.color.medium_sea_green;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Travel";
+        color = R.color.aqua;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Grocery";
+        color = R.color.maroon;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Food";
+        color = R.color.indigo;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Tax";
+        color = R.color.forest_green;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Rent";
+        color = R.color.lime;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Sports and Rec";
+        color = R.color.dark_blue;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Vacation";
+        color = R.color.hot_pink;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Investment";
+        color = R.color.cold;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Personal Care";
+        color = R.color.blanched_almond;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Health";
+        color = R.color.lavender_blush;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
-        dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
+        dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         transactionTypeModal = TransactionTypeModal.returnType(dbReader, "INCOME");
         id = IdentifierGenerator.timeStampGenerator();
         name = "Gift";
+        color = R.color.coral;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Salary";
+        color = R.color.thistle;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
         id = IdentifierGenerator.timeStampGenerator();
         name = "Miscellaneous";
+        color = R.color.medium_orchid;
         typeID = transactionTypeModal.getId();
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
-        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName));
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        categoryItemModals.add(new CategoryItemModal(id, name, typeID, type, typeName, color));
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         CategoryItemModal.insertIntoTable(dbWriter, categoryItemModals);
     }
 
     public void populatePlanTypeTable() {
         List<PlanTypeModal> planTypeModals = new ArrayList<>();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         TransactionTypeModal transactionTypeModal = TransactionTypeModal.returnType(dbReader, "EXPENSE");
         long id = IdentifierGenerator.timeStampGenerator();
         String name = "Monthly";
@@ -282,12 +302,12 @@ public class PopulateInitialTables {
         type = transactionTypeModal.getType();
         typeName = transactionTypeModal.getTypeName();
         planTypeModals.add(new PlanTypeModal(id, name, typeID, type, typeName));
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         PlanTypeModal.insertIntoTable(dbWriter, planTypeModals);
     }
 
     public void populateIconTable() {
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         List<IconModal> iconModals = new ArrayList<>();
         long id = IdentifierGenerator.timeStampGenerator();
         int icon = R.drawable.ic_bank_icon;
@@ -310,10 +330,10 @@ public class PopulateInitialTables {
     }
 
     public void populateWalletPlanTable() {
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         List<WalletPlannerModal> walletPlannerModals = new ArrayList<>();
         List<IconModal> iconModals = IconModal.returnAll(dbReader);
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         int i = 0;
         while (i < 2) {
             long id = IdentifierGenerator.timeStampGenerator();
@@ -332,14 +352,14 @@ public class PopulateInitialTables {
     }
 
     public void populateExpensePlanTable() {
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         List<ExpensePlannerModal> expensePlannerModals = new ArrayList<>();
         Date date = new Date();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         List<MonthModal> monthModals = MonthModal.returnAll(dbReader);
-        dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         PlanTypeModal planTypeModal = PlanTypeModal.returnPlanType(dbReader, "Monthly");
-        dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         YearModal yearModal = YearModal.returnYear(dbReader, Calendar.getInstance().get(Calendar.YEAR));
         int i = 0;
         while (i < 3) {
@@ -362,9 +382,9 @@ public class PopulateInitialTables {
     public void populateIncomePlanTable() {
         List<IncomePlannerModal> incomePlannerModals = new ArrayList<>();
         Date date = new Date();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         List<MonthModal> monthModals = MonthModal.returnAll(dbReader);
-        dbReader = new FinancialDatabaseWriter(this.context, 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(this.context, 1).getDatabaseReader();
         YearModal yearModal = YearModal.returnYear(dbReader, Calendar.getInstance().get(Calendar.YEAR));
         int i = 0;
         while (i < 3) {
@@ -379,7 +399,7 @@ public class PopulateInitialTables {
             incomePlannerModals.add(new IncomePlannerModal(id, 999999999, description, monthID, month, monthName, yearID, yearName));
             i++;
         }
-        SQLiteDatabase dbWriter = new FinancialDatabaseWriter(this.context, 1).getDatabaseWriter();
+        SQLiteDatabase dbWriter = new FinancialDatabaseOperation(this.context, 1).getDatabaseWriter();
         IncomePlannerModal.insertIntoTableInitial(dbWriter, incomePlannerModals);
     }
 }

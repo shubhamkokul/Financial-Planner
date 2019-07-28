@@ -1,9 +1,11 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.mumbai.financial.financialplanner.R;
 
 import planner.utility.PublicVariable;
 import planner.db.FinancialPlannerDataBase;

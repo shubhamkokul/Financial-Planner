@@ -39,4 +39,11 @@
     <string name="plan_already_added">Plan already added</string>
     <string name="set_the_date">Set the Date</string>
     <string name="enter_date">Enter Date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toggle_planned_actual">toggle_planned_actual</string>
+    <string name="actual_transaction">Actual Expense</string>
+    <string name="back_button">Back Button</string>
+    <string name="mon">MON</string>
 </resources>

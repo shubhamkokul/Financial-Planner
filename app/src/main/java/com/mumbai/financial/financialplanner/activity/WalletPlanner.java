@@ -1,4 +1,4 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +15,13 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.fragment.Wallet;
+
 import java.util.List;
 
 import planner.androidadapters.WalletIconAdapter;
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.IconModal;
 import planner.db.modal.WalletPlannerModal;
 import planner.utility.IdentifierGenerator;
@@ -40,7 +43,7 @@ public class WalletPlanner extends AppCompatActivity {
         iconSpinner = findViewById(R.id.iconSpinner);
         backButton = findViewById(R.id.backButton);
 
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         iconModals = IconModal.returnAll(dbReader);
         WalletIconAdapter walletIconAdapter = new WalletIconAdapter(getApplicationContext(), iconModals);
         iconSpinner.setAdapter(walletIconAdapter);
@@ -68,7 +71,7 @@ public class WalletPlanner extends AppCompatActivity {
         String name = nameEditText.getText().toString().trim();
         IconModal iconModal = iconModals.get(iconSpinner.getSelectedItemPosition());
         String balance = currentAmountEditText.getText().toString().trim();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         if (WalletPlannerModal.checkItem(dbReader, name.toUpperCase(), iconModal.getIcon()) > 0) {
             walletPlannerModal = null;
             showPopUp(getCurrentFocus(), "Account Already Added");
@@ -89,7 +92,7 @@ public class WalletPlanner extends AppCompatActivity {
                         0.0,
                         Double.parseDouble(balance)
                 );
-                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
                 WalletPlannerModal.insertIntoTable(dbWriter, walletPlannerModal);
             }
 

@@ -1,4 +1,4 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -19,13 +19,15 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.mumbai.financial.financialplanner.R;
+
 import java.util.Calendar;
 import java.util.List;
 
 import planner.androidadapters.CategoryListViewListAdapter;
 import planner.androidadapters.ExpenseListViewListAdapter;
 import planner.androidadapters.WalletListViewListAdapter;
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.businesspopulate.AmountCalculation;
 import planner.db.modal.ActualExpenseModal;
 import planner.db.modal.CategoryItemModal;
@@ -36,7 +38,6 @@ import planner.db.modal.WalletPlannerModal;
 import planner.utility.IdentifierGenerator;
 
 public class AddExpense extends AppCompatActivity {
-    private static final String TAG = "AddExpense";
     private Spinner accountTypeSpinner, planTypeSpinner, categoryTypeSpinner;
     private EditText amountEditText, dateEditText;
     private Switch planSwitch;
@@ -51,19 +52,19 @@ public class AddExpense extends AppCompatActivity {
         setContentView(R.layout.activity_add_expense);
 
         accountTypeSpinner = findViewById(R.id.accountTypeSpinner);
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         walletPlannerModals = WalletPlannerModal.returnAll(dbReader);
         WalletListViewListAdapter walletAdapter = new WalletListViewListAdapter(getApplicationContext(), walletPlannerModals);
         accountTypeSpinner.setAdapter(walletAdapter);
 
         planTypeSpinner = findViewById(R.id.planTypeSpinner);
-        dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         expensePlannerModals = ExpensePlannerModal.returnAll(dbReader);
         ExpenseListViewListAdapter expenseAdapter = new ExpenseListViewListAdapter(getApplicationContext(), expensePlannerModals);
         planTypeSpinner.setAdapter(expenseAdapter);
 
         categoryTypeSpinner = findViewById(R.id.categoryTypeSpinner);
-        dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         categoryItemModals = CategoryItemModal.returnAll(dbReader, 0);
         CategoryListViewListAdapter categoryAdapter = new CategoryListViewListAdapter(getApplicationContext(), categoryItemModals);
         categoryTypeSpinner.setAdapter(categoryAdapter);
@@ -92,9 +93,7 @@ public class AddExpense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TransactionModal transactionModal = onExpenseSave();
-                if (transactionModal == null) {
-
-                } else {
+                if (transactionModal != null) {
                     if (saveExpenseMain(transactionModal) > 0) {
                         showPopUp(getCurrentFocus(), "Saved");
                     } else {
@@ -118,7 +117,7 @@ public class AddExpense extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
         expensePlannerModals = ExpensePlannerModal.returnAll(dbReader);
         ExpenseListViewListAdapter expenseAdapter = new ExpenseListViewListAdapter(getApplicationContext(), expensePlannerModals);
         planTypeSpinner.setAdapter(expenseAdapter);
@@ -142,24 +141,24 @@ public class AddExpense extends AppCompatActivity {
     }
 
     public TransactionModal onExpenseSave() {
-        TransactionModal returnValue = null;
+        TransactionModal returnValue;
         if (amountEditText.getText().toString().isEmpty() || dateEditText.getText().toString().isEmpty()) {
             showPopUp(getCurrentFocus(), "Please Enter all fields");
             return null;
         } else {
             long id = IdentifierGenerator.timeStampGenerator();
             String date = dateEditText.getText().toString().trim();
-            long timeStamp = id;
             ExpensePlannerModal expensePlannerModal = expensePlannerModals.get(planTypeSpinner.getSelectedItemPosition());
             WalletPlannerModal walletPlannerModal = walletPlannerModals.get(accountTypeSpinner.getSelectedItemPosition());
             double currentAmount = Double.parseDouble(amountEditText.getText().toString().trim());
             CategoryItemModal categoryItemModal = categoryItemModals.get(categoryTypeSpinner.getSelectedItemPosition());
             boolean planned = planSwitch.isChecked();
+            String dateTemp[] = date.split("-");
             TransactionModal transactionModal = new TransactionModal(
                     id,
                     date,
-                    timeStamp,
-                    expensePlannerModal.getPlanID(),
+                    id,
+                    expensePlannerModal.getId(),
                     expensePlannerModal.getMonthName() + " " + expensePlannerModal.getYearName(),
                     walletPlannerModal.getId(),
                     walletPlannerModal.getName(),
@@ -171,16 +170,20 @@ public class AddExpense extends AppCompatActivity {
                     categoryItemModal.getTypeID(),
                     categoryItemModal.getType(),
                     categoryItemModal.getTypeName(),
-                    planned
+                    planned,
+                    categoryItemModal.getColor(),
+                    dateTemp[1],
+                    expensePlannerModal.getMonthName()
+
             );
-            SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+            SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
             returnValue = TransactionModal.insertIntoTable(dbWriter, transactionModal);
         }
         return returnValue;
     }
 
     public long saveExpenseMain(TransactionModal transactionModal) {
-        long returnValue = 0;
+        long returnValue;
         if (transactionModal == null) {
             return 0;
         } else {
@@ -196,9 +199,12 @@ public class AddExpense extends AppCompatActivity {
                         transactionModal.getCategoryName(),
                         transactionModal.getDate(),
                         transactionModal.getCurrentAmount(),
-                        transactionModal.isPlanned()
+                        transactionModal.isPlanned(),
+                        transactionModal.getCategoryColor(),
+                        transactionModal.getDay(),
+                        transactionModal.getMonth()
                 );
-                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
                 returnValue = PlannedExpenseModal.insertIntoTable(dbWriter, plannedExpenseModal);
             } else {
                 ActualExpenseModal actualExpenseModal = new ActualExpenseModal(
@@ -212,11 +218,14 @@ public class AddExpense extends AppCompatActivity {
                         transactionModal.getCategoryName(),
                         transactionModal.getDate(),
                         transactionModal.getCurrentAmount(),
-                        transactionModal.isPlanned()
+                        transactionModal.isPlanned(),
+                        transactionModal.getCategoryColor(),
+                        transactionModal.getDay(),
+                        transactionModal.getMonth()
                 );
-                SQLiteDatabase dbWriter = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseWriter();
+                SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseWriter();
                 ActualExpenseModal.insertIntoTable(dbWriter, actualExpenseModal);
-                SQLiteDatabase dbReader = new FinancialDatabaseWriter(getApplicationContext(), 1).getDatabaseReader();
+                SQLiteDatabase dbReader = new FinancialDatabaseOperation(getApplicationContext(), 1).getDatabaseReader();
                 WalletPlannerModal walletPlannerModal = WalletPlannerModal.returnWallet(dbReader, transactionModal.getAccountId());
                 returnValue = AmountCalculation.expenseCalculation(getApplicationContext(), actualExpenseModal, walletPlannerModal);
             }

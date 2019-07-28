@@ -1,10 +1,16 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.fragment.Expenses;
+import com.mumbai.financial.financialplanner.fragment.Home;
+import com.mumbai.financial.financialplanner.fragment.Income;
+import com.mumbai.financial.financialplanner.fragment.Wallet;
 
 import planner.androidadapters.SectionPageAdapter;
 
@@ -44,6 +50,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mViewPager.setCurrentItem(0);
         }
-
     }
 }

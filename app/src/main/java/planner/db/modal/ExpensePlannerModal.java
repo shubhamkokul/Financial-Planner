@@ -4,10 +4,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpensePlannerModal {
+public class ExpensePlannerModal implements Serializable {
     private long id;
     private long planID;
     private int planType;

@@ -1,21 +1,25 @@
-package com.mumbai.financial.financialplanner;
+package com.mumbai.financial.financialplanner.fragment;
 
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.mumbai.financial.financialplanner.activity.IncomePlanner;
+import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.activity.ExpenseDetailView;
+
 import java.util.List;
 
 import planner.androidadapters.IncomeListViewAdapter;
-import planner.db.FinancialDatabaseWriter;
+import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.IncomePlannerModal;
 
 
@@ -30,7 +34,7 @@ public class Income extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_income, container, false);
-        SQLiteDatabase dbReader = new FinancialDatabaseWriter(getActivity(), 1).getDatabaseReader();
+        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
         incomePlannerModals = IncomePlannerModal.returnAll(dbReader);
         incomeListView = view.findViewById(R.id.incomeListView);
         IncomeListViewAdapter adapter = new IncomeListViewAdapter(getActivity(), incomePlannerModals);
