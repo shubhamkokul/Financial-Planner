@@ -182,7 +182,7 @@ public class ActualIncomeModal {
 
     public static List<ActualIncomeModal> returnMonthTransaction(SQLiteDatabase dbReader, long planID) {
         List<ActualIncomeModal> actualIncomeModals = new ArrayList<>();
-        Cursor c = dbReader.rawQuery("SELECT * FROM ACTUALEXPENSETABLE WHERE PLANID = '" + planID + "'", null);
+        Cursor c = dbReader.rawQuery("SELECT * FROM ACTUALINCOMETABLE WHERE PLANID = '" + planID + "'", null);
         if (c.moveToFirst()) {
             do {
                 actualIncomeModals.add(new ActualIncomeModal(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3), c.getLong(4),

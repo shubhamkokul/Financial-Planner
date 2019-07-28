@@ -1,6 +1,5 @@
 package com.mumbai.financial.financialplanner.fragment;
 
-
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,36 +13,38 @@ import android.widget.TextView;
 
 import com.mumbai.financial.financialplanner.R;
 import com.mumbai.financial.financialplanner.activity.AddExpense;
+import com.mumbai.financial.financialplanner.activity.AddIncome;
 
 import java.util.List;
 
-import planner.androidadapters.ActualExpenseAdapter;
+import planner.androidadapters.ActualIncomeAdapter;
+import planner.androidadapters.PlannedIncomeAdapter;
 import planner.db.FinancialDatabaseOperation;
-import planner.db.modal.ActualExpenseModal;
-import planner.db.modal.ExpensePlannerModal;
+import planner.db.modal.ActualIncomeModal;
+import planner.db.modal.IncomePlannerModal;
+import planner.db.modal.PlannedIncomeModal;
 
-public class ExpenseActualTransaction extends Fragment {
-    ExpensePlannerModal expensePlannerModal;
-    ImageView backImage, toggleImage, addExpense;
+public class IncomeTransaction extends Fragment {
+    IncomePlannerModal incomePlannerModal;
+    ImageView backImage, toggleImage, addIncome;
     private TextView transactionTextViewTitle;
     private boolean transactionViewBoolean = true;
-    private List<ActualExpenseModal> actualExpenseModals;
-    private ListView actualExpenseListView;
+    private List<ActualIncomeModal> actualIncomeModals;
+    private List<PlannedIncomeModal> plannedIncomeModals;
+    private ListView transactionList;
 
-
-    public ExpenseActualTransaction() {
+    public IncomeTransaction() {
 
     }
-
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_expense_actual_transaction, container, false);
-        this.expensePlannerModal = (ExpensePlannerModal) getArguments().getSerializable("expensePlannerModal");
+        View view = inflater.inflate(R.layout.fragment_income_transaction, container, false);
+        this.incomePlannerModal = (IncomePlannerModal) getArguments().getSerializable("incomePlannerModal");
         transactionTextViewTitle = view.findViewById(R.id.transactionTextViewTitle);
         backImage = view.findViewById(R.id.backImage);
         toggleImage = view.findViewById(R.id.toggleImage);
-        addExpense = view.findViewById(R.id.addExpense);
-        actualExpenseListView = view.findViewById(R.id.actualExpenseListView);
+        addIncome = view.findViewById(R.id.addIncome);
+        transactionList = view.findViewById(R.id.transactionList);
         toggleTransaction();
         toggleImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +52,10 @@ public class ExpenseActualTransaction extends Fragment {
                 toggleTransaction();
             }
         });
-        addExpense.setOnClickListener(new View.OnClickListener() {
+        addIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddExpense.class);
+                Intent intent = new Intent(getActivity(), AddIncome.class);
                 startActivity(intent);
             }
         });
@@ -69,15 +70,18 @@ public class ExpenseActualTransaction extends Fragment {
 
     public void toggleTransaction() {
         if (transactionViewBoolean) {
-            transactionTextViewTitle.setText("Actual Expense");
+            transactionTextViewTitle.setText("Actual Income");
             SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
-            actualExpenseModals = ActualExpenseModal.returnMonthTransaction(dbReader, expensePlannerModal.getId());
-            ActualExpenseAdapter adapter = new ActualExpenseAdapter(getActivity(), actualExpenseModals);
-            actualExpenseListView.setAdapter(adapter);
+            actualIncomeModals = ActualIncomeModal.returnMonthTransaction(dbReader, incomePlannerModal.getId());
+            ActualIncomeAdapter adapter = new ActualIncomeAdapter(getActivity(), actualIncomeModals);
+            transactionList.setAdapter(adapter);
             transactionViewBoolean = false;
         } else {
-            transactionTextViewTitle.setText("Planned Expense");
+            transactionTextViewTitle.setText("Planned Income");
             SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
+            plannedIncomeModals = PlannedIncomeModal.returnMonthTransaction(dbReader, incomePlannerModal.getId());
+            PlannedIncomeAdapter adapter = new PlannedIncomeAdapter(getActivity(), plannedIncomeModals);
+            transactionList.setAdapter(adapter);
             transactionViewBoolean = true;
         }
     }
@@ -85,9 +89,6 @@ public class ExpenseActualTransaction extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
-        actualExpenseModals = ActualExpenseModal.returnMonthTransaction(dbReader, expensePlannerModal.getId());
-        ActualExpenseAdapter adapter = new ActualExpenseAdapter(getActivity(), actualExpenseModals);
-        actualExpenseListView.setAdapter(adapter);
+        toggleTransaction();
     }
 }

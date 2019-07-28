@@ -1,21 +1,42 @@
 package com.mumbai.financial.financialplanner.activity;
 
+import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.mumbai.financial.financialplanner.R;
+import com.mumbai.financial.financialplanner.fragment.IncomeTransaction;
+
+import planner.androidadapters.DetailSectionPageAdapter;
+import planner.db.modal.IncomePlannerModal;
 
 public class IncomeDetailView extends AppCompatActivity {
-    private TextView position;
+    private static final String TAG = "IncomeDetailView";
+    private ViewPager mViewPager;
+    private TabLayout tabLayout;
+    private IncomePlannerModal incomePlannerModal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_income_detail_view);
-        Bundle intent = getIntent().getExtras();
-        int i = intent.getInt("position");
-        position = findViewById(R.id.position);
-        position.setText(i+"");
+        Intent intent = getIntent();
+        incomePlannerModal = (IncomePlannerModal) intent.getSerializableExtra("incomePlannerModal");
+        mViewPager = findViewById(R.id.container);
+        setupViewPager(mViewPager);
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        DetailSectionPageAdapter adapter = new DetailSectionPageAdapter(getSupportFragmentManager());
+        Bundle args = new Bundle();
+        args.putSerializable("incomePlannerModal", incomePlannerModal);
+        IncomeTransaction incomeTransaction = new IncomeTransaction();
+        incomeTransaction.setArguments(args);
+        adapter.addFragment(incomeTransaction, "Transaction");
+        viewPager.setAdapter(adapter);
     }
 }

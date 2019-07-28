@@ -5,10 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomePlannerModal {
+public class IncomePlannerModal implements Serializable {
     private String description;
     private long monthID;
     private int month;
