@@ -46,6 +46,7 @@ public class ActualExpenseAdapter extends ArrayAdapter<ActualExpenseModal> {
         month3Word.setText(actualExpenseModals.get(position).getMonth().substring(0, 3));
         String displayText = "-" + actualExpenseModals.get(position).getAmount();
         amount.setText(displayText);
+        amount.setTextColor(getContext().getResources().getColor(R.color.red));
         description.setText(actualExpenseModals.get(position).getCategoryName());
         return view;
     }

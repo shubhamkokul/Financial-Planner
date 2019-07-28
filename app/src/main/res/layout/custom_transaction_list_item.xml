@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:textColor="@color/green"
+        android:textColor="@color/red"
         android:layout_alignParentRight="true"
         android:text="@string/_500"
         android:layout_alignParentEnd="true"

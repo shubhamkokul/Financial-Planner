@@ -48,6 +48,7 @@ public class PlannedExpenseAdapter extends ArrayAdapter<PlannedExpenseModal> {
         month3Word.setText(plannedExpenseModals.get(position).getMonth().substring(0, 3));
         String displayText = "-" + plannedExpenseModals.get(position).getAmount();
         amount.setText(displayText);
+        amount.setTextColor(getContext().getResources().getColor(R.color.red));
         description.setText(plannedExpenseModals.get(position).getCategoryName());
         return view;
     }

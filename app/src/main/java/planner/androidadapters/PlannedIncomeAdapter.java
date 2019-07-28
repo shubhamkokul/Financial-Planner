@@ -47,6 +47,7 @@ public class PlannedIncomeAdapter  extends ArrayAdapter<PlannedIncomeModal> {
         month3Word.setText(plannedIncomeModals.get(position).getMonth().substring(0, 3));
         String displayText = "" + plannedIncomeModals.get(position).getAmount();
         amount.setText(displayText);
+        amount.setTextColor(getContext().getResources().getColor(R.color.green));
         description.setText(plannedIncomeModals.get(position).getCategoryName());
         return view;
     }

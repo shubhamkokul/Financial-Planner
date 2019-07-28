@@ -142,7 +142,7 @@ public class PopulateInitialTables {
         TransactionTypeModal transactionTypeModal = TransactionTypeModal.returnType(dbReader, "EXPENSE");
         long id = IdentifierGenerator.timeStampGenerator();
         String name = "Accommodation";
-        int color = R.color.dark_cyan;
+        int color = R.color.colorAccent;
         long typeID = transactionTypeModal.getId();
         int type = transactionTypeModal.getType();
         String typeName = transactionTypeModal.getTypeName();

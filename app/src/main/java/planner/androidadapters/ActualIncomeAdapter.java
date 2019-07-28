@@ -45,8 +45,9 @@ public class ActualIncomeAdapter  extends ArrayAdapter<ActualIncomeModal> {
         monthAndDay.setBackgroundColor(getContext().getResources().getColor(actualIncomeModals.get(position).getCategoryColor()));
         dayWord.setText(actualIncomeModals.get(position).getDay());
         month3Word.setText(actualIncomeModals.get(position).getMonth().substring(0, 3));
-        String displayText = "-" + actualIncomeModals.get(position).getAmount();
+        String displayText = "" + actualIncomeModals.get(position).getAmount();
         amount.setText(displayText);
+        amount.setTextColor(getContext().getResources().getColor(R.color.green));
         description.setText(actualIncomeModals.get(position).getCategoryName());
         return view;
     }
