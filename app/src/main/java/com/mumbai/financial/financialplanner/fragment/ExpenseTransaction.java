@@ -1,6 +1,8 @@
 package com.mumbai.financial.financialplanner.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,9 +23,11 @@ import java.util.List;
 import planner.androidadapters.ActualExpenseAdapter;
 import planner.androidadapters.PlannedExpenseAdapter;
 import planner.db.FinancialDatabaseOperation;
+import planner.db.businesspopulate.AmountCalculation;
 import planner.db.modal.ActualExpenseModal;
 import planner.db.modal.ExpensePlannerModal;
 import planner.db.modal.PlannedExpenseModal;
+import planner.utility.Utility;
 
 public class ExpenseTransaction extends Fragment {
     ExpensePlannerModal expensePlannerModal;
@@ -75,15 +80,80 @@ public class ExpenseTransaction extends Fragment {
             transactionTextViewTitle.setText("Actual Expense");
             SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
             actualExpenseModals = ActualExpenseModal.returnMonthTransaction(dbReader, expensePlannerModal.getId());
-            ActualExpenseAdapter adapter = new ActualExpenseAdapter(getActivity(), actualExpenseModals);
+            final ActualExpenseAdapter adapter = new ActualExpenseAdapter(getActivity(), actualExpenseModals);
             transactionList.setAdapter(adapter);
+            transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Do you want to delete?");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseWriter();
+                                    AmountCalculation.expenseCalculationDelete(getActivity(), actualExpenseModals.get(position));
+                                    ActualExpenseModal.deleteTransaction(dbWriter, actualExpenseModals.get(position));
+                                    actualExpenseModals.remove(position);
+                                    adapter.notifyDataSetChanged();
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
+
+                }
+            });
             transactionViewBoolean = false;
         } else {
             transactionTextViewTitle.setText("Planned Expense");
             SQLiteDatabase dbReader = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseReader();
             plannedExpenseModals = PlannedExpenseModal.returnMonthTransaction(dbReader, expensePlannerModal.getId());
-            PlannedExpenseAdapter adapter = new PlannedExpenseAdapter(getActivity(), plannedExpenseModals);
+            final PlannedExpenseAdapter adapter = new PlannedExpenseAdapter(getActivity(), plannedExpenseModals);
             transactionList.setAdapter(adapter);
+            transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Do you want to delete?");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    SQLiteDatabase dbWriter = new FinancialDatabaseOperation(getActivity(), 1).getDatabaseWriter();
+                                    PlannedExpenseModal.deleteTransaction(dbWriter, plannedExpenseModals.get(position));
+                                    plannedExpenseModals.remove(position);
+                                    adapter.notifyDataSetChanged();
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
+
+                }
+            });
             transactionViewBoolean = true;
         }
     }

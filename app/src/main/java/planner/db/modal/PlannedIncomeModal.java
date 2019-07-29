@@ -41,6 +41,8 @@ public class PlannedIncomeModal {
         this.month = month;
     }
 
+
+
     public long getId() {
         return id;
     }
@@ -192,6 +194,13 @@ public class PlannedIncomeModal {
         }
         dbReader.close();
         return plannedIncomeModals;
+    }
+
+    public static void deleteTransaction(SQLiteDatabase dbWriter, PlannedIncomeModal plannedIncomeModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", plannedIncomeModal.getId());
+        dbWriter.delete("PLANNEDINCOMETABLE", "ID=?", new String[]{plannedIncomeModal.getId()+""}) ;
+        dbWriter.close();
     }
 
 }
