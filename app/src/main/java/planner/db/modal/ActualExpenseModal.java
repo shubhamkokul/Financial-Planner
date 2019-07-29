@@ -40,6 +40,8 @@ public class ActualExpenseModal {
         this.month = month;
     }
 
+
+
     public long getId() {
         return id;
     }
@@ -191,6 +193,13 @@ public class ActualExpenseModal {
         }
         dbReader.close();
         return actualExpenseModals;
+    }
+
+    public static void deleteTransaction(SQLiteDatabase dbWriter, ActualExpenseModal actualExpenseModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", actualExpenseModal.getId());
+        dbWriter.delete("ACTUALEXPENSETABLE", "ID=?", new String[]{actualExpenseModal.getId()+""}) ;
+        dbWriter.close();
     }
 
 }

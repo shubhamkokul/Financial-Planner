@@ -41,6 +41,8 @@ public class ActualIncomeModal {
         this.month = month;
     }
 
+
+
     public long getId() {
         return id;
     }
@@ -192,6 +194,13 @@ public class ActualIncomeModal {
         }
         dbReader.close();
         return actualIncomeModals;
+    }
+
+    public static void deleteTransaction(SQLiteDatabase dbWriter, ActualIncomeModal actualIncomeModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", actualIncomeModal.getId());
+        dbWriter.delete("ACTUALINCOMETABLE", "ID=?", new String[]{actualIncomeModal.getId()+""}) ;
+        dbWriter.close();
     }
 
 }

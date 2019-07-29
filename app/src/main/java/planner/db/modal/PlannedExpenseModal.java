@@ -40,6 +40,8 @@ public class PlannedExpenseModal {
         this.month = month;
     }
 
+
+
     public long getId() {
         return id;
     }
@@ -191,6 +193,13 @@ public class PlannedExpenseModal {
         }
         dbReader.close();
         return plannedExpenseModals;
+    }
+
+    public static void deleteTransaction(SQLiteDatabase dbWriter, PlannedExpenseModal plannedExpenseModal) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ID", plannedExpenseModal.getId());
+        dbWriter.delete("PLANNEDEXPENSETABLE", "ID=?", new String[]{plannedExpenseModal.getId()+""}) ;
+        dbWriter.close();
     }
 
 }

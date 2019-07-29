@@ -1,5 +1,11 @@
 package planner.utility;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import planner.db.FinancialDatabaseOperation;
 import planner.db.modal.ActualExpenseModal;
 import planner.db.modal.ActualIncomeModal;
 import planner.db.modal.PlannedExpenseModal;
@@ -18,6 +25,7 @@ public class Utility {
         return new Timestamp(System.currentTimeMillis()).getTime() + new Random().nextInt();
     }
 
+    @SuppressLint("NewApi")
     public static HashMap<String, String> mergeCategoriesActualExpense(List<ActualExpenseModal> actualExpenseModals) {
         HashMap<String, String> pieMerge = new HashMap<>();
         for (ActualExpenseModal actualExpenseModal : actualExpenseModals) {
@@ -46,6 +54,7 @@ public class Utility {
         return mergeColor;
     }
 
+    @SuppressLint("NewApi")
     public static HashMap<String, String> mergeCategoriesPlannedExpense(List<PlannedExpenseModal> plannedExpenseModals) {
         HashMap<String, String> pieMerge = new HashMap<>();
         for (PlannedExpenseModal plannedExpenseModal : plannedExpenseModals) {
@@ -73,7 +82,7 @@ public class Utility {
         }
         return mergeColor;
     }
-
+    @SuppressLint("NewApi")
     public static HashMap<String, String> mergeCategoriesActualIncome(List<ActualIncomeModal> actualIncomeModals) {
         HashMap<String, String> pieMerge = new HashMap<>();
         for (ActualIncomeModal actualIncomeModal : actualIncomeModals) {
@@ -134,6 +143,7 @@ public class Utility {
         Calendar cal = Calendar.getInstance();
         return cal.getTime().getMonth() + 1;
     }
+
     public static int getCurrentYear() {
         Calendar cal = Calendar.getInstance();
         return cal.getTime().getYear() + 1900;
